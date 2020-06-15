@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image} from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, Text, StyleSheet, Dimensions, Image, Button} from 'react-native';
 import logo from "../../images/unnamed.png";
 import facebook from "../../images/facebook.png";
-import gg from from "../../images/symbol.png";
+import gg from "../../images/symbol.png";
 import email from "../../images/mail.png"
 
 const deviceWidth = Dimensions.get("window").width;
@@ -19,25 +18,18 @@ export default function Loginfg() {
 
             </View>
             <View style={styles.buttonLogin}>
-                <View>
-                    <Image style={styles.img} source={facebook} alt="facebok"/>
+                <View style={styles.btnF}>
+                    <Image style={styles.img} source={facebook} alt="facebook"/>
                     <Button 
                         title="Đăng nhập bằng facebook"
-                        color="#2b3648"
+                        color="#485a96"
                         />
                 </View>
-                <View>
+                <View style={styles.btnG}>
                     <Image style={styles.img} source={gg} alt="google"/>
                     <Button 
                         title="Đăng nhập bằng google"
-                        color="#2b3648"
-                        />
-                </View>
-                <View>
-                    <Image style={styles.img} source={email} alt="email"/>
-                    <Button 
-                        title="Đăng nhập bằng email"
-                        color="#2b3648"
+                        color="#dc4e41"
                         />
                 </View>
             </View>
@@ -61,18 +53,39 @@ const styles = StyleSheet.create({
         borderRadius: screenWidth(5),
         paddingTop: screenHeight(20)
     },
-    btn: {
-        marginHorizontal: screenWidth(5),
+    btnF: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#485a96',
+        borderWidth: 0.5,
+        borderColor: '#fff',
+        height: screenHeight(6),
         width: screenWidth(80),
-        height: screenHeight(10)
-    },
+        borderRadius: 5,
+        marginLeft: screenWidth(10),
+        paddingLeft: screenWidth(5),
+        marginBottom: screenHeight(1)
+        },
+    btnG: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#dc4e41',
+        borderWidth: 0.5,
+        borderColor: '#fff',
+        height: screenHeight(6),
+        width: screenWidth(80),
+        borderRadius: 5,
+        marginLeft: screenWidth(10),
+        paddingLeft: screenWidth(5)
+        },
     buttonLogin: {
         flex: 1,
         flexDirection: 'column'
     }
     ,
     img: {
-        width: 16,
-        height: 16
+        width: 24,
+        height: 24,
+        marginRight: 10
     }
 })

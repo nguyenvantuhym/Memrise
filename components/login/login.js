@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, Image} from 'react-native';
-import { Button } from 'react-native-elements';
+import { View, Text, StyleSheet, Dimensions, Image, Button} from 'react-native';
+
 import logo from "../../images/unnamed.png";
 
 
