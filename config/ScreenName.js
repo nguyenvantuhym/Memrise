@@ -1,0 +1,3 @@
+const COURSE_SCREEN = 'COURSE_SCREEN';
+
+export { COURSE_SCREEN };
