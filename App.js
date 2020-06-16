@@ -26,12 +26,14 @@ import {
 
 import Login from './components/login/login.js';
 import LoginFG from './components/login/loginfg.js';
+import Unit from './components/Screens/unitWord.js';
 
 const App: () => React$Node = () => {
   return (
     <>
      {/* <Login/> */}
-     <LoginFG/>
+     {/* <LoginFG/> */}
+     <Unit/>
     </>
   );
 };
