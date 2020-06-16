@@ -1,12 +1,17 @@
 import * as React from 'react';
-import { View, Text,Image,  Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {TouchableOpacity, Image} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 import CourseScreen from './screens/CourseScreen';
-import { COURSE_SCREEN } from './config/ScreenName';
+import SelectCourseScreen from './screens/SelectCourseScreent';
+import LoginScreen from './screens/LoginScreen';
+import {
+  COURSE_SCREEN,
+  SELECT_COURSE_SCREENT,
+  LOGIN_SCREEN,
+} from './config/ScreenName';
 import MenuIMG from './asset/menu.png';
-
 
 const Stack = createStackNavigator();
 
@@ -14,7 +19,25 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name={COURSE_SCREEN} component={CourseScreen} options={styleTitle.titleCourseScreen} />
+        <Stack.Screen
+          name={LOGIN_SCREEN}
+          component={LoginScreen}
+          options={({navigation}) =>
+            styleTitle(navigation, SELECT_COURSE_SCREENT)
+          }
+        />
+        <Stack.Screen
+          name={COURSE_SCREEN}
+          component={CourseScreen}
+          options={({navigation}) =>
+            styleTitle(navigation, SELECT_COURSE_SCREENT)
+          }
+        />
+        <Stack.Screen
+          name={SELECT_COURSE_SCREENT}
+          component={SelectCourseScreen}
+          options={({navigation}) => styleTitle(navigation, COURSE_SCREEN)}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -22,28 +45,28 @@ function App() {
 
 export default App;
 
-const styleTitle = {
-  titleCourseScreen : {
-    title: 'My home',
-    headerStyle: {
-      backgroundColor: '#2a3546',
-    },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    headerLeft: () => (
-      <View style={{marginRight:5,}}>
-        <Image
-          style={{
-            marginLeft: 8,
-            width: 20,
-            height: 20
-          }}
-          source={MenuIMG}
-        />
-      </View>
-      
-    ),
+const styleTitle = (navigation, ScreenName) => ({
+  title: 'Tên khóa học',
+  headerStyle: {
+    backgroundColor: '#2a3546',
   },
-}
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate(ScreenName);
+      }}>
+      <Image
+        style={{
+          marginLeft: 25,
+          width: 20,
+          height: 20,
+        }}
+        source={MenuIMG}
+      />
+    </TouchableOpacity>
+  ),
+});
