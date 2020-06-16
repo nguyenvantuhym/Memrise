@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {TouchableOpacity, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -59,14 +59,14 @@ const styleTitle = (navigation, ScreenName) => ({
       onPress={() => {
         navigation.navigate(ScreenName);
       }}>
-      <Image style={styles.img} source={MenuIMG} />
+      <Image
+        style={{
+          marginLeft: 25,
+          width: 20,
+          height: 20,
+        }}
+        source={MenuIMG}
+      />
     </TouchableOpacity>
   ),
-});
-const styles = StyleSheet.create({
-  img: {
-    marginLeft: 25,
-    width: 20,
-    height: 20,
-  },
 });
