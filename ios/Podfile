@@ -79,6 +79,8 @@ target 'memrise' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
+
   target 'memriseTests' do
     inherit! :complete
     # Pods for testing
