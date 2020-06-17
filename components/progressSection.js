@@ -1,16 +1,10 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 
 function progressSection() {
   return (
-    <View
-      style={{
-        marginTop: 50,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+    <View style={styles.container}>
       <ProgressCircle
         percent={30}
         radius={50}
@@ -25,3 +19,11 @@ function progressSection() {
   );
 }
 export default progressSection;
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

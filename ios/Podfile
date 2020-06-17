@@ -81,6 +81,8 @@ target 'memrise' do
 
   pod 'react-native-fbsdk', :path => '../node_modules/react-native-fbsdk'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'memriseTests' do
     inherit! :complete
     # Pods for testing
