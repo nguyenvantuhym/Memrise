@@ -19,7 +19,13 @@ import firestore from '@react-native-firebase/firestore';
 const Content = props => (
   <View style={styleContent.containerContent}>
     <View style={{flex: 2}}>
-      <Image source={icon} style={{width: PixelRatio.getPixelSizeForLayoutSize(20), height: PixelRatio.getPixelSizeForLayoutSize(25)}} />
+      <Image
+        source={icon}
+        style={{
+          width: PixelRatio.getPixelSizeForLayoutSize(20),
+          height: PixelRatio.getPixelSizeForLayoutSize(25),
+        }}
+      />
     </View>
 
     <View style={{flex: 5}}>

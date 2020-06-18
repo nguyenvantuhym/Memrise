@@ -9,11 +9,13 @@ import LoginScreen from './screens/LoginScreen';
 import Provider from './context/context';
 import FlashScreen from './screens/PlashScreen';
 import SectionScreen from './screens/SectionScreen';
+import TestScreen from './screens/TestScreent';
 
 import {
   COURSE_SCREEN,
   SELECT_COURSE_SCREENT,
   LOGIN_SCREEN,
+  TEST_SCREEN,
   SECTION_SCREEN,
   // SELECT_LANGUAGE,
   FLASH_SCREEN,
@@ -28,9 +30,14 @@ function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name={TEST_SCREEN}
+            component={TestScreen}
+            options={({navigation}) => styleTitle(navigation, SECTION_SCREEN)}
+          />
+          <Stack.Screen
             name={SECTION_SCREEN}
             component={SectionScreen}
-            options={({navigation}) => styleTitle(navigation, COURSE_SCREEN)}
+            options={({navigation}) => styleTitle(navigation, FLASH_SCREEN)}
           />
           <Stack.Screen
             name={FLASH_SCREEN}
@@ -40,9 +47,7 @@ function App() {
           <Stack.Screen
             name={COURSE_SCREEN}
             component={CourseScreen}
-            options={({navigation}) =>
-              styleTitle(navigation, SELECT_COURSE_SCREENT)
-            }
+            options={({navigation}) => styleTitle(navigation, LOGIN_SCREEN)}
           />
           <Stack.Screen
             name={LOGIN_SCREEN}
@@ -54,7 +59,7 @@ function App() {
           <Stack.Screen
             name={SELECT_COURSE_SCREENT}
             component={SelectCourseScreen}
-            options={({navigation}) => styleTitle(navigation, COURSE_SCREEN)}
+            options={({navigation}) => styleTitle(navigation, TEST_SCREEN)}
           />
         </Stack.Navigator>
       </NavigationContainer>
