@@ -1,80 +1,105 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import * as React from 'react';
+import {TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import CourseScreen from './screens/CourseScreen';
+import SelectCourseScreen from './screens/SelectCourseScreent';
+import LoginScreen from './screens/LoginScreen';
+import Provider from './context/context';
+import FlashScreen from './screens/PlashScreen';
+import SectionScreen from './screens/SectionScreen';
+import TestScreen from './screens/TestScreent';
+import ProfieScreen from './screens/ProfileScreen';
 
 import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  COURSE_SCREEN,
+  SELECT_COURSE_SCREENT,
+  LOGIN_SCREEN,
+  TEST_SCREEN,
+  SECTION_SCREEN,
+  SELECT_LANGUAGE,
+  FLASH_SCREEN,
+} from './config/ScreenName';
+import MenuIMG from './asset/menu.png';
 
-import Login from './components/login/login.js';
-import LoginFG from './components/login/loginfg.js';
-import Unit from './components/Screens/unitWord.js';
 
-const App: () => React$Node = () => {
+const Stack = createStackNavigator();
+
+function App() {
   return (
-    <>
-     {/* <Login/> */}
-     {/* <LoginFG/> */}
-     <Unit/>
-    </>
-  );
-};
+    <Provider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name={'PROFILE_SCREEN'}
+            component={ProfieScreen}
+            options={({navigation}) => styleTitle(navigation, TEST_SCREEN)}
+          />
+          <Stack.Screen
+            name={TEST_SCREEN}
+            component={TestScreen}
+            options={({navigation}) => styleTitle(navigation, SECTION_SCREEN)}
+          />
+          <Stack.Screen
+            name={SECTION_SCREEN}
+            component={SectionScreen}
+            options={({navigation}) => styleTitle(navigation, FLASH_SCREEN)}
+          />
+          <Stack.Screen
+            name={FLASH_SCREEN}
+            component={FlashScreen}
+            options={({navigation}) => styleTitle(navigation, COURSE_SCREEN)}
+          />
+          <Stack.Screen
+            name={COURSE_SCREEN}
+            component={CourseScreen}
+            options={({navigation}) => styleTitle(navigation, LOGIN_SCREEN)}
+          />
+          <Stack.Screen
+            name={LOGIN_SCREEN}
+            component={LoginScreen}
+            options={({navigation}) =>
+              styleTitle(navigation, SELECT_COURSE_SCREENT)
+            }
+          />
+          <Stack.Screen
+            name={SELECT_COURSE_SCREENT}
+            component={SelectCourseScreen}
+            options={({navigation}) => styleTitle(navigation, TEST_SCREEN)}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
 
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: 'yellow',
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: 'yellow',
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
+  );
+}
 
 export default App;
+
+const styleTitle = (navigation, ScreenName) => ({
+  title: 'Tên khóa học',
+  headerStyle: {
+    backgroundColor: '#2a3546',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+  },
+  headerLeft: () => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate(ScreenName);
+      }}>
+      <Image style={styles.header} source={MenuIMG} />
+    </TouchableOpacity>
+  ),
+});
+
+const styles = StyleSheet.create({
+  header: {
+    marginLeft: 25,
+    width: 20,
+    height: 20,
+  },
+});

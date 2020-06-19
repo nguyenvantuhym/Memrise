@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "350479807541",
+    "firebase_url": "https://memrise-88fe3.firebaseio.com",
+    "project_id": "memrise-88fe3",
+    "storage_bucket": "memrise-88fe3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350479807541:android:61d89c869e4773768d2d7c",
+        "android_client_info": {
+          "package_name": "com.memrise"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350479807541-alvkt33u4d7fp888be6e6ubf9f0q1b71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.memrise",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "350479807541-rmgoa2v72ij7f0nakcjn1c1nc4junuml.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMgyDffZsPXiGve_XZrMM19ZjDus-Isjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350479807541-rmgoa2v72ij7f0nakcjn1c1nc4junuml.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
