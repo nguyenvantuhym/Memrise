@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import {Button} from 'react-native-elements';
-import {Icon} from 'react-native-elements';
+// import {Icon} from 'react-native-elements';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -17,28 +13,16 @@ export default function ButtonUnitDetail() {
     <View style={styles.container}>
       <View>
         <Button
-          buttonStyle={{
-            backgroundColor: '#ffc000',
-            height: screenHeight(7),
-            marginTop: screenHeight(1),
-            borderRadius: screenWidth(50),
-            paddingHorizontal: screenWidth(5),
-          }}
+          buttonStyle={styles.button}
           title="Ôn tập"
-          titleStyle={{fontSize: 20}}
+          titleStyle={styles.fontSizeButon}
         />
       </View>
       <View>
         <Button
-          buttonStyle={{
-            backgroundColor: '#ffc000',
-            height: screenHeight(7),
-            marginTop: screenHeight(1),
-            borderRadius: screenWidth(7),
-            paddingHorizontal: screenWidth(5),
-          }}
+          buttonStyle={styles.button2}
           title="Từ và cụm từ"
-          titleStyle={{fontSize: 20}}
+          titleStyle={styles.fontSizeButon}
         />
       </View>
     </View>
@@ -54,5 +38,19 @@ const styles = StyleSheet.create({
     paddingLeft: screenWidth(3),
     paddingTop: screenWidth(1),
   },
+  button: {
+    backgroundColor: '#ffc000',
+    height: screenHeight(7),
+    marginTop: screenHeight(1),
+    borderRadius: screenWidth(50),
+    paddingHorizontal: screenWidth(5),
+  },
+  button2: {
+    backgroundColor: '#ffc000',
+    height: screenHeight(7),
+    marginTop: screenHeight(1),
+    borderRadius: screenWidth(7),
+    paddingHorizontal: screenWidth(5),
+  },
+  fontSizeButon: {fontSize: 20},
 });
-

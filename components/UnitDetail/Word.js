@@ -1,4 +1,4 @@
-import React from 'react';;
+import React from 'react';
 import {
   Text,
   Image,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     paddingLeft: screenWidth(4),
     paddingRight: screenWidth(4),
     marginHorizontal: screenWidth(2),
-},
+  },
   wordImage: {
     width: 40,
     height: 40,
@@ -81,4 +81,3 @@ const styles = StyleSheet.create({
     paddingLeft: screenWidth(1),
   },
 });
-
