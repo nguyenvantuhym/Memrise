@@ -23,6 +23,7 @@ import {
 } from './config/ScreenName';
 import MenuIMG from './asset/menu.png';
 
+
 const Stack = createStackNavigator();
 
 function App() {
@@ -70,6 +71,7 @@ function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
+
   );
 }
 
