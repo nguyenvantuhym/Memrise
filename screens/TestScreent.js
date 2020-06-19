@@ -20,45 +20,64 @@ const Answer = props => (
   </View>
 );
 
-class TestScreen extends React.Component {
-  componentDidMount = async () => {
+const answerStyle = StyleSheet.create({
+  itemAnswerContainer: {
+    width: '48%',
+    height: '30%',
+    marginHorizontal: '1%',
+    borderRadius: 5,
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    borderWidth: 1,
+    borderColor: '#fff',
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+    marginTop: '2%',
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+const TestScreen = () => {
+  React.useEffect(() => {
     // const user = await firestore()
     //   .collection('Users')
     //   .doc('us')
     //   .get();
     // console.log(user.data());
-  };
+  });
 
-  render() {
-    return (
-      <View style={styles.screen}>
-        <View style={styles.QuestionContainer}>
-          <View style={styles.Question}>
-            <Text style={styles.TextQuestion}>Được chuyển đến, đạt được</Text>
-          </View>
-          <View style={styles.imgProgress}>
-            <Image
-              source={icon}
-              style={{
-                width: PixelRatio.getPixelSizeForLayoutSize(20),
-                height: PixelRatio.getPixelSizeForLayoutSize(25),
-              }}
-            />
-          </View>
+  return (
+    <View style={styles.screen}>
+      <View style={styles.QuestionContainer}>
+        <View style={styles.Question}>
+          <Text style={styles.TextQuestion}>Được chuyển đến, đạt được</Text>
         </View>
-        <View style={styles.AnswerContainer}>
-          <Answer />
-          <Answer />
-          <Answer />
-          <Answer />
-          <Answer />
-          <Answer />
+        <View style={styles.imgProgress}>
+          <Image
+            source={icon}
+            style={{
+              width: PixelRatio.getPixelSizeForLayoutSize(20),
+              height: PixelRatio.getPixelSizeForLayoutSize(25),
+            }}
+          />
         </View>
-        <View style={{height: 90, width: '100%'}} />
       </View>
-    );
-  }
-}
+      <View style={styles.AnswerContainer}>
+        <Answer />
+        <Answer />
+        <Answer />
+        <Answer />
+        <Answer />
+        <Answer />
+      </View>
+      <View style={{height: 90, width: '100%'}} />
+    </View>
+  );
+};
+
 export default TestScreen;
 const styles = StyleSheet.create({
   screen: {
@@ -88,25 +107,5 @@ const styles = StyleSheet.create({
     color: '#2b343f',
     fontSize: 25,
     fontWeight: 'bold',
-  },
-});
-
-const answerStyle = StyleSheet.create({
-  itemAnswerContainer: {
-    width: '48%',
-    height: '30%',
-    marginHorizontal: '1%',
-    borderRadius: 5,
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    borderWidth: 1,
-    borderColor: '#fff',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    marginTop: '2%',
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

@@ -7,16 +7,35 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-
 import logo from './../images/unnamed.png';
 // import Navigate from './../../helper/navigage';
-import {LOGIN_SCREEN} from '../config/ScreenName';
+import {LOGIN_SCREEN, COURSE_SCREEN} from '../config/ScreenName';
 
 const deviceWidth = Dimensions.get('window').width;
 const screenWidth = percent => (percent * deviceWidth) / 100;
 
 export default function PlashScreen({navigation}) {
+  const [user, setUser] = React.useState();
+  function onAuthStateChanged(user) {
+    if (user) {
+      setUser(user);
+      //console.log(user);
+      // navigation.navigate(COURSE_SCREEN);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: COURSE_SCREEN}],
+        }),
+      );
+    } else {
+    }
+  }
+  React.useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  });
   return (
     <View style={styles.container}>
       <View style={styles.logo}>
@@ -28,12 +47,11 @@ export default function PlashScreen({navigation}) {
       <View style={styles.buttomLogin}>
         <TouchableOpacity
           onPress={() => {
-            auth()
-              .signOut()
-              .then(() => {
-                console.log('User signed out!');
-                navigation.replace(LOGIN_SCREEN);
-              });
+            // auth()
+            //   .signOut()
+            //   .then(() => {
+            //     console.log('User signed out!');
+            //   });
           }}>
           <View style={styles.btnSelectLanguage}>
             <Text style={styles.btnText}>Chọn một ngôn ngữ để học</Text>
@@ -41,7 +59,12 @@ export default function PlashScreen({navigation}) {
         </TouchableOpacity>
         <View style={styles.containerlogin}>
           <Text>Đã có tài khoản</Text>
-          <Text style={styles.LoginText}>Đăng nhập ngay</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.replace(LOGIN_SCREEN);
+            }}>
+            <Text style={styles.LoginText}>Đăng nhập ngay</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

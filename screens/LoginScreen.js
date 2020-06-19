@@ -1,8 +1,10 @@
 import React from 'react';
 import {Button, View, StyleSheet, Dimensions, Image} from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 import logo from './../images/unnamed.png';
 import facebook from './../images/facebook.png';
 import gg from './../images/symbol.png';
+import {COURSE_SCREEN} from './../config/ScreenName';
 // import email from '../../images/mail.png';
 
 const deviceWidth = Dimensions.get('window').width;
@@ -21,26 +23,38 @@ GoogleSignin.configure({
     '350479807541-rmgoa2v72ij7f0nakcjn1c1nc4junuml.apps.googleusercontent.com',
 });
 
-class CourseScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: '',
-    };
+export default function CourseScreen(props) {
+  const [user, setUser] = React.useState();
+  const {navigation} = props;
+  function onAuthStateChanged(user) {
+    if (user) {
+      setUser(user);
+      //console.log(user);
+      // navigation.navigate(COURSE_SCREEN);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: COURSE_SCREEN}],
+        }),
+      );
+    } else {
+    }
   }
-  componentDidMount = async () => {
-    LoginManager.logOut();
+  React.useEffect(() => {
+    // LoginManager.logOut();
     // auth()
     //   .signOut()
     //   .then(() => console.log('User signed out!'));
-    const user = await firestore()
-      .collection('Users')
-      .doc('us')
-      .get();
-    console.log(user.data());
-  };
+    // const user = await firestore()
+    //   .collection('Users')
+    //   .doc('us')
+    //   .get();
+    // console.log(user.data());
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  });
 
-  onFacebookButtonPress = async () => {
+  const onFacebookButtonPress = async () => {
     // Attempt login with permissions
     const result = await LoginManager.logInWithPermissions([
       'public_profile',
@@ -50,73 +64,63 @@ class CourseScreen extends React.Component {
     if (result.isCancelled) {
       throw 'User cancelled the login process';
     }
-
     // Once signed in, get the users AccesToken
     const data = await AccessToken.getCurrentAccessToken();
-
     if (!data) {
       throw 'Something went wrong obtaining access token';
     }
-
     // Create a Firebase credential with the AccessToken
     const facebookCredential = auth.FacebookAuthProvider.credential(
       data.accessToken,
     );
-
     // Sign-in the user with the credential
     return auth().signInWithCredential(facebookCredential);
   };
-  onGoogleButtonPress = async () => {
+  const onGoogleButtonPress = async () => {
     // Get the users ID token
     const {idToken} = await GoogleSignin.signIn();
-
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
     // Sign-in the user with the credential
     return auth().signInWithCredential(googleCredential);
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.logo}>
-          <Image style={styles.logoImage} source={logo} />
+  return (
+    <View style={styles.container}>
+      <View style={styles.logo}>
+        <Image style={styles.logoImage} source={logo} />
+      </View>
+      <View style={styles.buttonLogin}>
+        <View style={styles.btnF}>
+          <Image style={styles.img} source={facebook} alt="facebook" />
+          <Button
+            title="Đăng nhập bằng facebook"
+            color="#485a96"
+            onPress={() => {
+              onFacebookButtonPress().then(user => {
+                console.log(user.user.displayName);
+                this.setState({name: user.user.displayName});
+              });
+            }}
+          />
         </View>
-        <View style={styles.buttonLogin}>
-          <View style={styles.btnF}>
-            <Image style={styles.img} source={facebook} alt="facebook" />
-            <Button
-              title="Đăng nhập bằng facebook"
-              color="#485a96"
-              onPress={() => {
-                this.onFacebookButtonPress().then(user => {
-                  console.log(user.user.displayName);
-                  this.setState({name: user.user.displayName});
-                });
-              }}
-            />
-          </View>
-          <View style={styles.btnG}>
-            <Image style={styles.img} source={gg} alt="google" />
-            <Button
-              title="Đăng nhập bằng google"
-              color="#dc4e41"
-              onPress={() => {
-                this.onGoogleButtonPress().then(user => {
-                  console.log(user.user.displayName);
-                  this.setState({name: user.user.displayName});
-                });
-              }}
-            />
-          </View>
+        <View style={styles.btnG}>
+          <Image style={styles.img} source={gg} alt="google" />
+          <Button
+            title="Đăng nhập bằng google"
+            color="#dc4e41"
+            onPress={() => {
+              onGoogleButtonPress().then(user => {
+                console.log(user.user.displayName);
+                this.setState({name: user.user.displayName});
+              });
+            }}
+          />
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
-
-export default CourseScreen;
 
 const styles = StyleSheet.create({
   container: {

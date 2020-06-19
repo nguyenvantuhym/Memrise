@@ -11,7 +11,8 @@ import FlashScreen from './screens/PlashScreen';
 import SectionScreen from './screens/SectionScreen';
 import TestScreen from './screens/TestScreent';
 import ProfieScreen from './screens/ProfileScreen';
-import WordDetail from './screens/WordDetailScreen'
+import WordDetailScreen from './screens/WordDetailScreen';
+import SettingScreen from './screens/SettingScreen';
 
 import {
   COURSE_SCREEN,
@@ -21,10 +22,9 @@ import {
   SECTION_SCREEN,
   SELECT_LANGUAGE,
   FLASH_SCREEN,
-  WORD_DETAIL_SCREEN
+  WORD_DETAIL_SCREEN,
 } from './config/ScreenName';
 import MenuIMG from './asset/menu.png';
-
 
 const Stack = createStackNavigator();
 
@@ -33,6 +33,11 @@ function App() {
     <Provider>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name={FLASH_SCREEN}
+            component={FlashScreen}
+            options={({ navigation }) => styleTitle(navigation, COURSE_SCREEN)}
+          />
           <Stack.Screen
             name={'PROFILE_SCREEN'}
             component={ProfieScreen}
@@ -49,11 +54,6 @@ function App() {
             options={({navigation}) => styleTitle(navigation, FLASH_SCREEN)}
           />
           <Stack.Screen
-            name={FLASH_SCREEN}
-            component={FlashScreen}
-            options={({navigation}) => styleTitle(navigation, COURSE_SCREEN)}
-          />
-          <Stack.Screen
             name={COURSE_SCREEN}
             component={CourseScreen}
             options={({navigation}) => styleTitle(navigation, LOGIN_SCREEN)}
@@ -68,17 +68,18 @@ function App() {
           <Stack.Screen
             name={SELECT_COURSE_SCREENT}
             component={SelectCourseScreen}
-            options={({navigation}) => styleTitle(navigation, WORD_DETAIL_SCREEN)}
+            options={({navigation}) =>
+              styleTitle(navigation, WORD_DETAIL_SCREEN)
+            }
           />
-           <Stack.Screen
+          <Stack.Screen
             name={WORD_DETAIL_SCREEN}
-            component={WordDetail}
+            component={WordDetailScreen}
             options={({navigation}) => styleTitle(navigation, TEST_SCREEN)}
           />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
-
   );
 }
 

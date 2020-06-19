@@ -7,7 +7,9 @@ import {
   Dimensions,
   PixelRatio,
   Image,
+  TouchableOpacity,
 } from 'react-native';
+import {WORD_DETAIL_SCREEN} from './../config/ScreenName';
 import icon from './../asset/demo2.png';
 import LinearGradient from 'react-native-linear-gradient';
 const deviceHeight = Dimensions.get('window').height;
@@ -16,32 +18,34 @@ const screenHeight = percent => (percent * deviceHeight) / 100;
 
 import firestore from '@react-native-firebase/firestore';
 
-const Content = props => (
-  <View style={styleContent.containerContent}>
-    <View style={{flex: 2}}>
-      <Image
-        source={icon}
-        style={{
-          width: PixelRatio.getPixelSizeForLayoutSize(20),
-          height: PixelRatio.getPixelSizeForLayoutSize(25),
-        }}
-      />
-    </View>
+const Content = ({navigation}) => (
+  <TouchableOpacity onPress={() => navigation.navigate(WORD_DETAIL_SCREEN)}>
+    <View style={styleContent.containerContent}>
+      <View style={{flex: 2}}>
+        <Image
+          source={icon}
+          style={{
+            width: PixelRatio.getPixelSizeForLayoutSize(20),
+            height: PixelRatio.getPixelSizeForLayoutSize(25),
+          }}
+        />
+      </View>
 
-    <View style={{flex: 5}}>
-      <View style={styleContent.titleContent}>
-        <Text style={{fontSize: 17, color: '#373a3c'}}>世話</Text>
+      <View style={{flex: 5}}>
+        <View style={styleContent.titleContent}>
+          <Text style={{fontSize: 17, color: '#373a3c'}}>世話</Text>
+        </View>
+        <View style={styleContent.descriptionContent}>
+          <Text>Trông nom, giúp đỡ</Text>
+        </View>
       </View>
-      <View style={styleContent.descriptionContent}>
-        <Text>Trông nom, giúp đỡ</Text>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={styleContent.titleContent}>
+          <Text>世話</Text>
+        </View>
       </View>
     </View>
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <View style={styleContent.titleContent}>
-        <Text>世話</Text>
-      </View>
-    </View>
-  </View>
+  </TouchableOpacity>
 );
 const styleContent = StyleSheet.create({
   titleContent: {
@@ -74,50 +78,40 @@ const HeaderSection = props => (
   </View>
 );
 
-class SectionScreen extends React.Component {
-  componentDidMount = async () => {
-    // const user = await firestore()
-    //   .collection('Users')
-    //   .doc('us')
-    //   .get();
-    // console.log(user.data());
-  };
-
-  render() {
-    return (
-      <View style={styles.screen}>
-        <ScrollView>
-          <View style={styles.listSectionCourse}>
-            <HeaderSection headerName="UNIT02 - Động từ" />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-            <Content />
-          </View>
-        </ScrollView>
-        <LinearGradient
-          colors={['transparent', '#fff']}
-          style={styles.LinearGradientStyle}>
-          <View />
-        </LinearGradient>
-      </View>
-    );
-  }
+function SectionScreen({navigation}) {
+  return (
+    <View style={styles.screen}>
+      <ScrollView>
+        <View style={styles.listSectionCourse}>
+          <HeaderSection headerName="UNIT02 - Động từ" />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+          <Content navigation={navigation} />
+        </View>
+      </ScrollView>
+      <LinearGradient
+        colors={['transparent', '#fff']}
+        style={styles.LinearGradientStyle}>
+        <View />
+      </LinearGradient>
+    </View>
+  );
 }
 export default SectionScreen;
 const styles = StyleSheet.create({
