@@ -11,6 +11,7 @@ import FlashScreen from './screens/PlashScreen';
 import SectionScreen from './screens/SectionScreen';
 import TestScreen from './screens/TestScreent';
 import ProfieScreen from './screens/ProfileScreen';
+import WordDetail from './screens/WordDetailScreen'
 
 import {
   COURSE_SCREEN,
@@ -20,6 +21,7 @@ import {
   SECTION_SCREEN,
   SELECT_LANGUAGE,
   FLASH_SCREEN,
+  WORD_DETAIL_SCREEN
 } from './config/ScreenName';
 import MenuIMG from './asset/menu.png';
 
@@ -66,6 +68,11 @@ function App() {
           <Stack.Screen
             name={SELECT_COURSE_SCREENT}
             component={SelectCourseScreen}
+            options={({navigation}) => styleTitle(navigation, WORD_DETAIL_SCREEN)}
+          />
+           <Stack.Screen
+            name={WORD_DETAIL_SCREEN}
+            component={WordDetail}
             options={({navigation}) => styleTitle(navigation, TEST_SCREEN)}
           />
         </Stack.Navigator>

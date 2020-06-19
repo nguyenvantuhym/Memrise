@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, Image, View, StyleSheet, Dimensions} from 'react-native';
 import {Button} from 'react-native-elements';
 import tree0 from '../../images/demo.png';
-import speaker from './../../images/speaker.png';
+import speaker from '../../images/speaker.png';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
