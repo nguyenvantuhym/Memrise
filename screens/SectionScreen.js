@@ -54,7 +54,6 @@ const styleContent = StyleSheet.create({
     width: '96%',
     backgroundColor: '#fdfaf3',
     flexDirection: 'row',
-    //alignItems: 'center',
   },
   descriptionContent: {
     marginTop: 5,

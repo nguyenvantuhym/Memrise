@@ -8,11 +8,15 @@ import firestore from '@react-native-firebase/firestore';
 
 class CourseScreen extends React.Component {
   componentDidMount = async () => {
-    const user = await firestore()
-      .collection('Users')
-      .doc('us')
+    const courses = await firestore()
+      .collection('courses')
+      .where('language', '==', 'japanese')
       .get();
-    console.log(user.data());
+    console.log(courses);
+    courses.forEach(function(doc) {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, ' => ', doc.data());
+    });
   };
 
   render() {

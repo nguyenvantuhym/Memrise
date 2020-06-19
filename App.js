@@ -10,6 +10,7 @@ import Provider from './context/context';
 import FlashScreen from './screens/PlashScreen';
 import SectionScreen from './screens/SectionScreen';
 import TestScreen from './screens/TestScreent';
+import ProfieScreen from './screens/ProfileScreen';
 
 import {
   COURSE_SCREEN,
@@ -17,7 +18,7 @@ import {
   LOGIN_SCREEN,
   TEST_SCREEN,
   SECTION_SCREEN,
-  // SELECT_LANGUAGE,
+  SELECT_LANGUAGE,
   FLASH_SCREEN,
 } from './config/ScreenName';
 import MenuIMG from './asset/menu.png';
@@ -29,6 +30,11 @@ function App() {
     <Provider>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name={'PROFILE_SCREEN'}
+            component={ProfieScreen}
+            options={({navigation}) => styleTitle(navigation, TEST_SCREEN)}
+          />
           <Stack.Screen
             name={TEST_SCREEN}
             component={TestScreen}

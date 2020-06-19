@@ -509,7 +509,7 @@
   },
 ];
 
-{
+const abcsd = {
   course: {
     id: '12313',
     courseName: 'mimi karaoboeru',
@@ -517,37 +517,55 @@
     sectionList: [
       {
         sectionName: 'danh tu',
-        sectionId: 'asd'
-      }
-    ]
+        sectionId: 'asd',
+      },
+    ],
     language: 'japanese',
-
+    index: 1,
   },
   section: {
     id: 'asd',
-    sectionName: 'danh tu',,
+    courseID: 'adsasd',
+    sectionName: 'danh tu',
     wordLength: 127,
-    wordList: [{
-      wordId:' ads',
-      wordOrigin:'dansei'
-      wordMean: ''
-    }]
+    wordList: [
+      {
+        wordId: ' ads',
+        wordOrigin: 'dans',
+        wordMean: '',
+      },
+    ],
+    index: 1,
+  },
+  word: {
+    wordId: 'ads',
+    sectionID: 'sectionid',
+    wordOrigin: 'danse',
+    wordOption: [{title: 'vantu', content: 'sadasd'}],
+    wordMean: 'ádasd',
+    description: [
+      {
+        text: '',
+        img: 'asdasd',
+      },
+    ],
   },
   user: {
-    displayName :'nguyeenx Vawn tus',
-    avatar :'asdasd',
+    UID: 'asdasd',
+    displayName: 'nguyeenx Vawn tus',
+    avatar: 'asdasd',
     myCourse: {
-      asdasdasd: {
+      courseID: {
         wordLearned: 30,
-        listSection: [{
-          sectionId: 'ádasd',
-          wordLearned: 10,
-        }],
-        stackLearning: [[],[],[],[],[],[],[]],
-
-
-
-      }
-    }
-  }
-}
+        listSection: [
+          {
+            sectionId: 'ádasd',
+            wordLearned: 10,
+          },
+        ],
+        stackLearning: [[], [], [], [], [], [], []],
+        listWordLearned: [{id: 'âsd'}],
+      },
+    },
+  },
+};

@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  ScrollView,
   StyleSheet,
   Text,
   Dimensions,
@@ -9,11 +8,11 @@ import {
   Image,
 } from 'react-native';
 import icon from './../asset/demo2.png';
-const deviceHeight = Dimensions.get('window').height;
+// const deviceHeight = Dimensions.get('window').height;
 
-const screenHeight = percent => (percent * deviceHeight) / 100;
+// const screenHeight = percent => (percent * deviceHeight) / 100;
 
-import firestore from '@react-native-firebase/firestore';
+// import firestore from '@react-native-firebase/firestore';
 
 const Answer = props => (
   <View style={answerStyle.itemAnswerContainer}>
@@ -55,7 +54,7 @@ class TestScreen extends React.Component {
           <Answer />
           <Answer />
         </View>
-        <View style={{height: 90, width:'100%'}}/>
+        <View style={{height: 90, width: '100%'}} />
       </View>
     );
   }
