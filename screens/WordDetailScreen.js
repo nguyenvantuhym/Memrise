@@ -3,6 +3,7 @@ import {Text, Image, View, StyleSheet, Dimensions} from 'react-native';
 import {Button} from 'react-native-elements';
 import tree0 from '../images/demo.png';
 import speaker from '../images/speaker.png';
+import {TEST_SCREEN} from './../config/ScreenName';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -69,13 +70,14 @@ const CenterStyle = StyleSheet.create({
   },
 });
 
-const ButtonBottom = props => (
+const ButtonBottom = ({navigation}) => (
   <View style={styleButtonBottom.bottom}>
     <Button
       title="TIẾP TỤC"
       type="outline"
       buttonStyle={styleButtonBottom.buttonBottom}
       titleStyle={styleButtonBottom.fontTextButton}
+      onPress={() => navigation.push(TEST_SCREEN)}
     />
   </View>
 );
@@ -97,14 +99,14 @@ const styleButtonBottom = StyleSheet.create({
   fontTextButton: {fontSize: 20, color: '#000', fontWeight: '700'},
 });
 
-export default function WordDetailScreen() {
+export default function WordDetailScreen({navigation}) {
   return (
     <View style={styles.containerCenter}>
       <View style={styles.container}>
-        <Top />
-        <Center />
+        <Top/>
+        <Center/>
       </View>
-      <ButtonBottom />
+      <ButtonBottom navigation={navigation}/>
     </View>
   );
 }

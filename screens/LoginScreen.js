@@ -1,7 +1,15 @@
 import React from 'react';
-import {Button, View, StyleSheet, Dimensions, Image} from 'react-native';
+import {
+  Button,
+  View,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import {CommonActions} from '@react-navigation/native';
-import logo from './../images/unnamed.png';
+import logo from './../images/logos.png';
 import facebook from './../images/facebook.png';
 import gg from './../images/symbol.png';
 import {COURSE_SCREEN} from './../config/ScreenName';
@@ -91,32 +99,30 @@ export default function CourseScreen(props) {
         <Image style={styles.logoImage} source={logo} />
       </View>
       <View style={styles.buttonLogin}>
-        <View style={styles.btnF}>
+        <TouchableOpacity
+          style={styles.btnF}
+          onPress={() => {
+            onFacebookButtonPress().then(user => {
+              console.log(user.user.displayName);
+              this.setState({name: user.user.displayName});
+            });
+          }}>
           <Image style={styles.img} source={facebook} alt="facebook" />
-          <Button
-            title="Đăng nhập bằng facebook"
-            color="#485a96"
-            onPress={() => {
-              onFacebookButtonPress().then(user => {
-                console.log(user.user.displayName);
-                this.setState({name: user.user.displayName});
-              });
-            }}
-          />
-        </View>
-        <View style={styles.btnG}>
+          <Text style={styles.title}>Đăng nhập bằng facebook</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.btnG}
+          onPress={() => {
+            onGoogleButtonPress().then(user => {
+              console.log(user.user.displayName);
+              this.setState({name: user.user.displayName});
+            });
+          }}
+          >
           <Image style={styles.img} source={gg} alt="google" />
-          <Button
-            title="Đăng nhập bằng google"
-            color="#dc4e41"
-            onPress={() => {
-              onGoogleButtonPress().then(user => {
-                console.log(user.user.displayName);
-                this.setState({name: user.user.displayName});
-              });
-            }}
-          />
-        </View>
+          <Text style={styles.title}>Đăng nhập bằng google</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -129,15 +135,15 @@ const styles = StyleSheet.create({
     width: screenWidth(100),
   },
   logoImage: {
-    height: screenWidth(70),
-    width: screenWidth(70),
+    height: screenWidth(50),
+    width: screenWidth(50),
   },
   logo: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: screenWidth(5),
-    paddingTop: screenHeight(20),
+    paddingTop: screenHeight(10),
   },
   btnF: {
     flexDirection: 'row',
@@ -172,5 +178,11 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     marginRight: 10,
+  },
+  title: {
+    color: '#fff',
+    fontSize: 17,
+    paddingLeft: screenWidth(1),
+    paddingBottom: 1,
   },
 });

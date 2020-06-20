@@ -9,12 +9,14 @@ import {
 } from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import logo from './../images/unnamed.png';
+import logo from './../images/logos.png';
 // import Navigate from './../../helper/navigage';
 import {LOGIN_SCREEN, COURSE_SCREEN} from '../config/ScreenName';
 
+const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
-const screenWidth = percent => (percent * deviceWidth) / 100;
+const screenWidth = percent => (deviceWidth * percent) / 100;
+const screenHeight = percent => (deviceHeight * percent) / 100;
 
 export default function PlashScreen({navigation}) {
   const [user, setUser] = React.useState();
@@ -78,13 +80,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   logoImage: {
-    height: screenWidth(90),
-    width: screenWidth(90),
+    height: screenWidth(40),
+    width: screenWidth(40),
   },
   logo: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: screenHeight(2),
   },
   containerSlogan: {
     flex: 1,

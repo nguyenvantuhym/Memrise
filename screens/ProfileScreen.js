@@ -7,6 +7,7 @@ import auth from '@react-native-firebase/auth';
 import userProFile from './../asset/user.png';
 import EmailProfile from './../asset/email.png';
 
+
 const deviceWidth = Dimensions.get('window').width;
 const screen = percent => (deviceWidth * percent) / 100;
 
@@ -86,16 +87,12 @@ export default class ProfileScreen extends React.Component {
             bottomDivider
           />
         </View>
-        <Button
-          onPress={this.logout}
-          title="Logout"
-          type="clear"
-          titleStyle={styles.logout}
-        />
       </View>
     );
   }
 }
+
+
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: screen(2),
