@@ -5,6 +5,8 @@ const ButtomCustome = props => {
   const styles = StyleSheet.create({
     containerButton: {
       position: 'relative',
+      width: props.width + 5,
+      height: props.height + 5,
     },
     up: {
       zIndex: 1,

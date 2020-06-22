@@ -4,9 +4,11 @@ import ProgressCircle from 'react-native-progress-circle';
 import {SECTION_SCREEN} from './../config/ScreenName';
 
 function progressSection({navigation}) {
+
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate(SECTION_SCREEN)}>
+      onPress={() => navigation.navigate(SECTION_SCREEN)}
+      style={{flex: 1}}>
       <View style={styles.container}>
         <ProgressCircle
           percent={30}

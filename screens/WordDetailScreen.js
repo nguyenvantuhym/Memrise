@@ -103,10 +103,10 @@ export default function WordDetailScreen({navigation}) {
   return (
     <View style={styles.containerCenter}>
       <View style={styles.container}>
-        <Top/>
-        <Center/>
+        <Top />
+        <Center />
       </View>
-      <ButtonBottom navigation={navigation}/>
+      <ButtonBottom navigation={navigation} />
     </View>
   );
 }

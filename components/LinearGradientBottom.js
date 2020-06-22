@@ -1,11 +1,12 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {screenHeight} from './../helper/SizeScreen';
 
 const LinearGradientBottom = props => {
   return (
     <LinearGradient
-      colors={['transparent', '#fff']}
+      colors={['#ffffff33', '#fff']}
       style={styles.LinearGradientStyle}>
       {props.children}
     </LinearGradient>
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
   LinearGradientStyle: {
     position: 'absolute',
     bottom: 0,
-    height: 150,
+    height: screenHeight(13),
     width: '100%',
   },
 });

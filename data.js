@@ -523,7 +523,7 @@ const abcsd = {
     language: 'japanese',
     index: 1,
   },
-  section: {
+  unit: {
     id: 'asd',
     courseID: 'adsasd',
     sectionName: 'danh tu',
@@ -569,3 +569,19 @@ const abcsd = {
     },
   },
 };
+
+const listUnit = [
+  {unitName: 'UNIT 01 - Danh từ'},
+  {unitName: 'UNIT02 - Động từ'},
+  {unitName: 'Unit03 - Tính từ'},
+  {unitName: 'Unit04 - Danh từ'},
+  {unitName: 'Unit05 - Động từ'},
+  {unitName: 'Unit06 - Katakana'},
+  {unitName: 'Unit07 - Tính từ'},
+  {unitName: 'Unit08 - Phó từ'},
+  {unitName: 'Unit09 - Danh từ'},
+  {unitName: 'Unit10 - Động từ'},
+  {unitName: 'Unit11 - Katakana'},
+];
+
+export {listUnit};

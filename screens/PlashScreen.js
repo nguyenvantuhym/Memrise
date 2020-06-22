@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import {CommonActions} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+
 import logo from './../images/logos.png';
 import Cancel from './../images/cancel.png';
 import {LOGIN_SCREEN, COURSE_SCREEN} from '../config/ScreenName';

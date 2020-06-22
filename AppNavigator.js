@@ -11,22 +11,24 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import CourseScreen from './screens/CourseScreen';
-import SelectCourseScreen from './screens/SelectCourseScreent';
+import SelectCourseScreen from './screens/ListCourseScreent';
 import LoginScreen from './screens/LoginScreen';
 import FlashScreen from './screens/PlashScreen';
-import SectionScreen from './screens/SectionScreen';
+import SectionScreen from './screens/UnitScreen';
 import TestScreen from './screens/TestScreent';
 import ProfileScreen from './screens/ProfileScreen';
 import WordDetailScreen from './screens/WordDetailScreen';
 import SettingScreen from './screens/SettingScreen';
+import MyCourseScreen from './screens/MyCourseScreen';
 
 import {
   COURSE_SCREEN,
-  SELECT_COURSE_SCREENT,
+  LIST_COURSE_SCREEN,
   LOGIN_SCREEN,
   TEST_SCREEN,
-  SECTION_SCREEN,
+  UNIT_SCREEN,
   SELECT_LANGUAGE,
+  MY_COURSE_SCREEN,
   FLASH_SCREEN,
   WORD_DETAIL_SCREEN,
   PROFILE_SCREEN,
@@ -90,7 +92,7 @@ function App() {
           })}
         />
         <Stack.Screen
-          name={SECTION_SCREEN}
+          name={UNIT_SCREEN}
           component={SectionScreen}
           options={({navigation}) => ({
             title: 'Mimi kara oboeru N3',
@@ -118,7 +120,38 @@ function App() {
             headerLeft: () => (
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate(SELECT_COURSE_SCREENT);
+                  navigation.navigate(MY_COURSE_SCREEN);
+                }}>
+                <Image style={styles.header} source={MenuIMG} />
+              </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate(PROFILE_SCREEN);
+                }}>
+                <Image style={styles.profile} source={ProfileIMG} />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+
+        <Stack.Screen
+          name={MY_COURSE_SCREEN}
+          component={MyCourseScreen}
+          options={({ navigation }) => ({
+            title: 'Các khóa học của bạn',
+            headerStyle: {
+              backgroundColor: '#2a3546',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate(LIST_COURSE_SCREEN);
                 }}>
                 <Image style={styles.header} source={MenuIMG} />
               </TouchableOpacity>
@@ -135,7 +168,7 @@ function App() {
         />
         <Stack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
         <Stack.Screen
-          name={SELECT_COURSE_SCREENT}
+          name={LIST_COURSE_SCREEN}
           component={SelectCourseScreen}
           options={({navigation}) => ({
             title: 'Khóa học',

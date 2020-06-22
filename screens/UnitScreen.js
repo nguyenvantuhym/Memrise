@@ -9,7 +9,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {WORD_DETAIL_SCREEN} from './../config/ScreenName';
+import {WORD_DETAIL_SCREEN} from '../config/ScreenName';
 import icon from './../asset/demo2.png';
 import LinearGradient from 'react-native-linear-gradient';
 const deviceHeight = Dimensions.get('window').height;

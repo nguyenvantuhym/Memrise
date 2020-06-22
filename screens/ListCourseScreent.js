@@ -4,55 +4,44 @@ import firestore from '@react-native-firebase/firestore';
 import {CommonActions} from '@react-navigation/native';
 
 import {Context} from '../context/ContextUser';
-import {COURSE_SCREEN, LIST_COURSE_SCREEN} from '../config/ScreenName';
+import {COURSE_SCREEN} from '../config/ScreenName';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import ButtomCustome from '../components/ButtonCutome';
-import MyCourseItem from '../components/MyCourseItem';
-
+import CourseItem from '../components/CourseItem';
 import {screenHeight, screenWidth} from './../helper/SizeScreen';
 
-function MyCourseScreen(props) {
+function ListCourseScreen(props) {
   const {user} = useContext(Context);
   const [courses, setCourses] = useState([]);
-  const {navigation} = props;
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      if (user) {
-        const myCourseRef = firestore()
-          .collection('myCourses')
-          .doc(user.uid);
-
-        myCourseRef.get().then(res => {
-          console.log('asdasd tutututu');
-          if (res.exists) {
-            const lscourse = res.data().listCourse ? res.data().listCourse : [];
-            setCourses(lscourse);
-          } else {
-            myCourseRef.set({listCourse: []}).then(() => {
-              console.log(' thanhf cong nhes');
-            });
-          }
+    console.log(user);
+    const {navigation} = props;
+    // console.log(user);
+    if (user) {
+      firestore()
+        .collection('courses')
+        .get()
+        .then(res => {
+          setCourses(res.docs.map(doc => ({id: doc.id, ...doc.data()})));
         });
-      } else {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{name: COURSE_SCREEN}],
-          }),
-        );
-      }
-    });
-    return unsubscribe;
-  }, [navigation, props, user]);
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: COURSE_SCREEN}],
+        }),
+      );
+    }
+  }, [props, user]);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <FlatList
-        style={{paddingBottom: 30, backgroundColor:"red"}}
           data={courses}
           renderItem={({item}) => {
             console.log(item);
-            return <MyCourseItem course={item} discription="Asdad" />;
+            return <CourseItem course={item} discription="Asdad" />;
           }}
           keyExtractor={item => item.id}
         />
@@ -72,7 +61,7 @@ function MyCourseScreen(props) {
             title="Thêm khóa học khác"
             onPress={() => {
               const {navigation} = props;
-              navigation.navigate(LIST_COURSE_SCREEN);
+              //navigation.navigate(LIST_COURSE_SCREEN);
             }}
           />
         </View>
@@ -80,7 +69,7 @@ function MyCourseScreen(props) {
     </View>
   );
 }
-export default MyCourseScreen;
+export default ListCourseScreen;
 
 const styles = StyleSheet.create({
   container: {

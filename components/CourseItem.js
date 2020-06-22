@@ -1,37 +1,82 @@
-import React from 'react';
+import React, {useContext, useReducer} from 'react';
 import {
   View,
   Text,
   Image,
+  TouchableWithoutFeedback,
   StyleSheet,
-  ProgressBarAndroid,
-  Dimensions,
+  Alert,
 } from 'react-native';
-import Img from './../asset/8909488000151101173929.jpg';
-
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
-const screenWidth = percent => (deviceWidth * percent) / 100;
-const screenHeight = percent => (deviceHeight * percent) / 100;
+import firestore from '@react-native-firebase/firestore';
+import {screenWidth} from '../helper/SizeScreen';
+import {Context} from './../context/ContextUser';
 
 function CourseItem(props) {
+  const {user} = useContext(Context);
+  const {course} = props;
+  const AddCourse = () => {
+    const mycourseRef = firestore()
+      .collection('myCourses')
+      .doc(user.uid);
+    firestore()
+      .runTransaction(transaction => {
+        return transaction.get(mycourseRef).then(mycoursedata => {
+          // if (!mycoursedata.exists) {
+          //   throw 'Document does not exist!';
+          // }
+
+          mycoursedata.data().listCourse.push({
+            id: course.id,
+            courseName: course.courseName,
+            imgLogo: course.imgLogo,
+            wordLearnedNumber: 0,
+            listLearning: [],
+            listLearned: [],
+            wordNumber: course.wordNumber,
+          });
+          console.log(mycoursedata.data().listCourse);
+          transaction.update(mycourseRef, {
+            listCourse: mycoursedata.data().listCourse,
+          });
+        });
+      })
+      .then(function() {
+        console.log('Transaction successfully committed!');
+      })
+      .catch(function(error) {
+        console.log('Transaction failed: ', error);
+      });
+  };
+
   return (
-    <View style={styles.courseItem}>
-      <View style={styles.img}>
-        <Image source={Img} style={styles.imgRound} />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Alert.alert(
+          'Thông báo',
+          `Bạn có thực sự muốn thêm khóa học ${course.courseName}?`,
+          [
+            {
+              text: 'Cancel',
+              onPress: () => console.log('OK Pressed'),
+              style: 'cancel',
+            },
+            {text: 'OK', onPress: AddCourse},
+          ],
+          {cancelable: false},
+        );
+      }}>
+      <View style={styles.courseItem}>
+        <View style={styles.img}>
+          <Image source={{uri: course.imgLogo}} style={styles.imgRound} />
+        </View>
+        <View style={styles.content}>
+          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+            {course.courseName}
+          </Text>
+          <Text style={{fontSize: 12}}>tututut</Text>
+        </View>
       </View>
-      <View style={styles.content}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-          {props.courseName}
-        </Text>
-        <Text style={{fontSize: 12}}>tututut</Text>
-        <ProgressBarAndroid
-          styleAttr="Horizontal"
-          indeterminate={false}
-          progress={0.5}
-        />
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 export default CourseItem;
@@ -39,7 +84,7 @@ export default CourseItem;
 const styles = StyleSheet.create({
   imgRound: {
     width: screenWidth(13),
-    height: screenWidth(12),
+    height: screenWidth(13),
     borderRadius: 50,
     marginRight: 10,
     overflow: 'hidden',
@@ -57,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 70,
     marginHorizontal: 10,
-    marginTop: 10,
+    marginTop: 15,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
