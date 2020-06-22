@@ -1,15 +1,29 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, ProgressBarAndroid} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ProgressBarAndroid,
+  Dimensions,
+} from 'react-native';
 import Img from './../asset/8909488000151101173929.jpg';
 
-function CourseItem() {
+const deviceHeight = Dimensions.get('window').height;
+const deviceWidth = Dimensions.get('window').width;
+const screenWidth = percent => (deviceWidth * percent) / 100;
+const screenHeight = percent => (deviceHeight * percent) / 100;
+
+function CourseItem(props) {
   return (
     <View style={styles.courseItem}>
       <View style={styles.img}>
         <Image source={Img} style={styles.imgRound} />
       </View>
       <View style={styles.content}>
-        <Text style={{fontSize: 20, fontWeight: 'bold'}}>Somatome N3 </Text>
+        <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          {props.courseName}
+        </Text>
         <Text style={{fontSize: 12}}>tututut</Text>
         <ProgressBarAndroid
           styleAttr="Horizontal"
@@ -24,15 +38,15 @@ export default CourseItem;
 
 const styles = StyleSheet.create({
   imgRound: {
-    width: '100%',
-    height: '80%',
-    // borderRadius: 50,
+    width: screenWidth(13),
+    height: screenWidth(12),
+    borderRadius: 50,
     marginRight: 10,
     overflow: 'hidden',
     borderWidth: 3,
   },
   content: {
-    flex: 9,
+    flex: 8,
   },
   img: {
     flex: 2,
@@ -40,9 +54,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   courseItem: {
-    marginTop: 30,
-    width: '95%',
     flex: 1,
+    height: 70,
+    marginHorizontal: 10,
+    marginTop: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

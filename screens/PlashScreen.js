@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -10,8 +10,9 @@ import {
 import {CommonActions} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import logo from './../images/logos.png';
-// import Navigate from './../../helper/navigage';
+import Cancel from './../images/cancel.png';
 import {LOGIN_SCREEN, COURSE_SCREEN} from '../config/ScreenName';
+import {Context} from './../context/ContextUser';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -19,12 +20,36 @@ const screenWidth = percent => (deviceWidth * percent) / 100;
 const screenHeight = percent => (deviceHeight * percent) / 100;
 
 export default function PlashScreen({navigation}) {
-  const [user, setUser] = React.useState();
-  function onAuthStateChanged(user) {
-    if (user) {
-      setUser(user);
-      //console.log(user);
-      // navigation.navigate(COURSE_SCREEN);
+  const {setUser} = useContext(Context);
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: ' ',
+      headerStyle: {
+        backgroundColor: '#80d0bb',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(COURSE_SCREEN);
+          }}>
+          <Image style={styles.cancel} source={Cancel} />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <View style={styles.scores}>
+          <Text style={styles.number}>10</Text>
+        </View>
+      ),
+    });
+  }, [navigation]);
+
+  function onAuthStateChanged(userRes) {
+    if (userRes) {
+      setUser(userRes);
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
@@ -47,14 +72,7 @@ export default function PlashScreen({navigation}) {
         <Text style={styles.slogan}>Học một ngoại ngữ. Gặp gỡ cả thế giới</Text>
       </View>
       <View style={styles.buttomLogin}>
-        <TouchableOpacity
-          onPress={() => {
-            // auth()
-            //   .signOut()
-            //   .then(() => {
-            //     console.log('User signed out!');
-            //   });
-          }}>
+        <TouchableOpacity>
           <View style={styles.btnSelectLanguage}>
             <Text style={styles.btnText}>Chọn một ngôn ngữ để học</Text>
           </View>
@@ -125,5 +143,23 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     paddingHorizontal: 30,
+  },
+  scores: {
+    paddingHorizontal: screenWidth(7),
+    paddingTop: screenWidth(1),
+    paddingBottom: screenWidth(1),
+    backgroundColor: '#78c5b0',
+    marginRight: 10,
+    borderRadius: screenWidth(4),
+  },
+  number: {
+    color: '#2a3546',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  cancel: {
+    height: 24,
+    width: 24,
+    marginLeft: screenWidth(4),
   },
 });

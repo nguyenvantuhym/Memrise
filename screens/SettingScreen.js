@@ -1,4 +1,4 @@
-import React, {useState} from 'react';;
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -10,10 +10,10 @@ import {
   Picker,
 } from 'react-native';
 
-import facebook from './../images/facebook-7d.png';;
-import edit from '../images/edit.png';;
-import lightDark from '../images/half.png';;
-import star from '../images/star.png';;
+import facebook from './../images/facebook-7d.png';
+import edit from '../images/edit.png';
+import lightDark from '../images/half.png';
+import star from '../images/star.png';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -31,7 +31,7 @@ export default function SettingScreen({naviagtion}) {
     setIsEnabledFacebook(previousState => !previousState);
   const toggleSwitchLight = () =>
     setIsEnabledLight(previousState => !previousState);
-    const toggleSwitchSort = () =>
+  const toggleSwitchSort = () =>
     setIsEnabledSort(previousState => !previousState);
   const toggleSwitchAuto = () =>
     setIsEnabledAuto(previousState => !previousState);
@@ -157,8 +157,7 @@ export default function SettingScreen({naviagtion}) {
         </View>
       </View>
     </ScrollView>
-
-    );
+  );
 }
 const styles = StyleSheet.create({
   container: {
@@ -207,5 +206,3 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-
-;

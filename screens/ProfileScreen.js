@@ -7,7 +7,6 @@ import auth from '@react-native-firebase/auth';
 import userProFile from './../asset/user.png';
 import EmailProfile from './../asset/email.png';
 
-
 const deviceWidth = Dimensions.get('window').width;
 const screen = percent => (deviceWidth * percent) / 100;
 
@@ -91,7 +90,6 @@ export default class ProfileScreen extends React.Component {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
