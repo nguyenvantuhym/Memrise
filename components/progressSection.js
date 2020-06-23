@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
-import {SECTION_SCREEN} from './../config/ScreenName';
+import { UNIT_SCREEN } from './../config/ScreenName';
 
-function progressSection({navigation}) {
-
+function progressSection({ navigation, unit }) {
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate(SECTION_SCREEN)}
-      style={{flex: 1}}>
+      onPress={() =>
+        navigation.navigate(UNIT_SCREEN, { wordList: unit.wordList })
+      }>
       <View style={styles.container}>
         <ProgressCircle
           percent={30}
@@ -17,9 +17,11 @@ function progressSection({navigation}) {
           color="#153f35"
           shadowColor="#d9ebe1"
           bgColor="#81d0bb">
-          <Text style={{fontSize: 18}}>{'30%'}</Text>
+          <Text style={{ fontSize: 18 }}>{'30%'}</Text>
         </ProgressCircle>
-        <Text style={{marginTop: 20}}> 9 - Unit09 - Danh tu</Text>
+        <Text style={{ marginTop: 20 }}>
+          {unit.unitName ? unit.unitName : 'khong co du lieu'}
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );

@@ -1,110 +1,32 @@
-import React from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Text,
-  Dimensions,
-  PixelRatio,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {WORD_DETAIL_SCREEN} from '../config/ScreenName';
-import icon from './../asset/demo2.png';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-const deviceHeight = Dimensions.get('window').height;
+import HeaderUnit from './../components/HeaderUnit';
+import WordItem from './../components/WordItem';
+// import {screenHeight, screenWidth} from './../helper/SizeScreen';
+// import firestore from '@react-native-firebase/firestore';
 
-const screenHeight = percent => (percent * deviceHeight) / 100;
-
-import firestore from '@react-native-firebase/firestore';
-
-const Content = ({navigation}) => (
-  <TouchableOpacity onPress={() => navigation.navigate(WORD_DETAIL_SCREEN)}>
-    <View style={styleContent.containerContent}>
-      <View style={{flex: 2}}>
-        <Image
-          source={icon}
-          style={{
-            width: PixelRatio.getPixelSizeForLayoutSize(20),
-            height: PixelRatio.getPixelSizeForLayoutSize(25),
-          }}
-        />
-      </View>
-
-      <View style={{flex: 5}}>
-        <View style={styleContent.titleContent}>
-          <Text style={{fontSize: 17, color: '#373a3c'}}>世話</Text>
-        </View>
-        <View style={styleContent.descriptionContent}>
-          <Text>Trông nom, giúp đỡ</Text>
-        </View>
-      </View>
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <View style={styleContent.titleContent}>
-          <Text>世話</Text>
-        </View>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
-const styleContent = StyleSheet.create({
-  titleContent: {
-    marginRight: 10,
-    justifyContent: 'center',
-  },
-  containerContent: {
-    marginTop: 5,
-    padding: 5,
-    width: '96%',
-    backgroundColor: '#fdfaf3',
-    flexDirection: 'row',
-  },
-  descriptionContent: {
-    marginTop: 5,
-  },
-});
-
-const HeaderSection = props => (
-  <View style={styles.headerSection}>
-    <View style={styles.containerHeader}>
-      <View style={styles.leftHeader}>
-        <Text style={{textAlign: 'center', color: '#fdfaf3'}}>1</Text>
-      </View>
-      <View style={styles.titleHeader}>
-        <Text style={{marginLeft: 10}}>{props.headerName}</Text>
-      </View>
-    </View>
-    <View style={{width: '100%', height: 10, backgroundColor: '#afdae3'}} />
-  </View>
-);
-
-function SectionScreen({navigation}) {
+function UnitScreen({ route, navigation }) {
+  const { wordList } = route.params;
+  const [words, setWords] = useState([]);
+  useEffect(() => {
+    if (wordList) {
+      setWords(wordList);
+    }
+  }, [wordList]);
   return (
     <View style={styles.screen}>
-      <ScrollView>
-        <View style={styles.listSectionCourse}>
-          <HeaderSection headerName="UNIT02 - Động từ" />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-          <Content navigation={navigation} />
-        </View>
-      </ScrollView>
+      <View style={styles.listSectionCourse}>
+        <FlatList
+          contentContainerStyle={{ paddingBottom: 130 }}
+          ListHeaderComponent={() => <HeaderUnit headerName={'blabla title'} />}
+          data={words}
+          renderItem={({ item }) => {
+            return <WordItem navigation={navigation} unit={item} />;
+          }}
+          keyExtractor={item => item.wordId}
+        />
+      </View>
       <LinearGradient
         colors={['transparent', '#fff']}
         style={styles.LinearGradientStyle}>
@@ -113,39 +35,20 @@ function SectionScreen({navigation}) {
     </View>
   );
 }
-export default SectionScreen;
+export default UnitScreen;
 const styles = StyleSheet.create({
-  listSectionCourse: {
-    flex: 1,
-    alignItems: 'center',
-    // justifyContent: 'center',
-  },
   screen: {
     position: 'relative',
+    height: '100%',
     backgroundColor: '#fdfaf3',
+  },
+  listSectionCourse: {
+    flex: 1,
   },
   LinearGradientStyle: {
     position: 'absolute',
     bottom: 0,
     height: 150,
     width: '100%',
-  },
-  containerHeader: {
-    width: '100%',
-    height: 80,
-    flexDirection: 'row',
-  },
-  headerSection: {
-    flexDirection: 'column',
-    marginVertical: 15,
-    width: '96%',
-  },
-  titleHeader: {
-    flex: 10,
-    backgroundColor: '#fff',
-  },
-  leftHeader: {
-    flex: 1,
-    backgroundColor: '#afdae3',
   },
 });

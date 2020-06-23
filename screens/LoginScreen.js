@@ -1,30 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Button,
   View,
   StyleSheet,
-  Dimensions,
   Image,
   TouchableOpacity,
   Text,
 } from 'react-native';
-import {CommonActions} from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 import logo from './../images/logos.png';
 import facebook from './../images/facebook.png';
 import gg from './../images/symbol.png';
-import {COURSE_SCREEN} from './../config/ScreenName';
-// import email from '../../images/mail.png';
-
-const deviceWidth = Dimensions.get('window').width;
-const deviceHeight = Dimensions.get('window').height;
-const screenWidth = percent => (percent * deviceWidth) / 100;
-const screenHeight = percent => (percent * deviceHeight) / 100;
+import { MY_COURSE_SCREEN } from './../config/ScreenName';
+import { screenHeight, screenWidth } from './../helper/SizeScreen';
 
 import auth from '@react-native-firebase/auth';
-import {LoginManager, AccessToken} from 'react-native-fbsdk';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
-import firestore from '@react-native-firebase/firestore';
-import {GoogleSignin} from '@react-native-community/google-signin';
+// import firestore from '@react-native-firebase/firestore';
+import { Context } from './../context/ContextUser';
+import { GoogleSignin } from '@react-native-community/google-signin';
 
 GoogleSignin.configure({
   webClientId:
@@ -32,8 +27,8 @@ GoogleSignin.configure({
 });
 
 export default function CourseScreen(props) {
-  const [user, setUser] = React.useState();
-  const {navigation} = props;
+  const {user, setUser } = useContext(Context);
+  const { navigation } = props;
   function onAuthStateChanged(user) {
     if (user) {
       setUser(user);
@@ -42,14 +37,13 @@ export default function CourseScreen(props) {
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{name: COURSE_SCREEN}],
+          routes: [{ name: MY_COURSE_SCREEN }],
         }),
       );
     } else {
     }
   }
   React.useEffect(() => {
-    // LoginManager.logOut();
     // auth()
     //   .signOut()
     //   .then(() => console.log('User signed out!'));
@@ -86,7 +80,7 @@ export default function CourseScreen(props) {
   };
   const onGoogleButtonPress = async () => {
     // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
+    const { idToken } = await GoogleSignin.signIn();
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     // Sign-in the user with the credential
@@ -103,8 +97,8 @@ export default function CourseScreen(props) {
           style={styles.btnF}
           onPress={() => {
             onFacebookButtonPress().then(user => {
-              console.log(user.user.displayName);
-              this.setState({name: user.user.displayName});
+              console.log(user);
+              //setUser(user.user);
             });
           }}>
           <Image style={styles.img} source={facebook} alt="facebook" />
@@ -115,11 +109,10 @@ export default function CourseScreen(props) {
           style={styles.btnG}
           onPress={() => {
             onGoogleButtonPress().then(user => {
-              console.log(user.user.displayName);
-              this.setState({name: user.user.displayName});
+              console.log(user);
+              //this.setState({ name: user.user.displayName });
             });
-          }}
-          >
+          }}>
           <Image style={styles.img} source={gg} alt="google" />
           <Text style={styles.title}>Đăng nhập bằng google</Text>
         </TouchableOpacity>

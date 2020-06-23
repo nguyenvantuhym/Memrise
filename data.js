@@ -1,4 +1,4 @@
-[
+const listWord = [
   {
     ja: '男性',
     vi: 'đàn ông',
@@ -539,16 +539,11 @@ const abcsd = {
   },
   word: {
     wordId: 'ads',
-    sectionID: 'sectionid',
+    unitId: 'sectionid',
     wordOrigin: 'danse',
-    wordOption: [{title: 'vantu', content: 'sadasd'}],
+    wordOption: [],
     wordMean: 'ádasd',
-    description: [
-      {
-        text: '',
-        img: 'asdasd',
-      },
-    ],
+    description: [],
   },
   user: {
     UID: 'asdasd',
@@ -564,24 +559,24 @@ const abcsd = {
           },
         ],
         stackLearning: [[], [], [], [], [], [], []],
-        listWordLearned: [{id: 'âsd'}],
+        listWordLearned: [{ id: 'âsd' }],
       },
     },
   },
 };
 
 const listUnit = [
-  {unitName: 'UNIT 01 - Danh từ'},
-  {unitName: 'UNIT02 - Động từ'},
-  {unitName: 'Unit03 - Tính từ'},
-  {unitName: 'Unit04 - Danh từ'},
-  {unitName: 'Unit05 - Động từ'},
-  {unitName: 'Unit06 - Katakana'},
-  {unitName: 'Unit07 - Tính từ'},
-  {unitName: 'Unit08 - Phó từ'},
-  {unitName: 'Unit09 - Danh từ'},
-  {unitName: 'Unit10 - Động từ'},
-  {unitName: 'Unit11 - Katakana'},
+  { unitName: 'UNIT 01 - Danh từ' },
+  { unitName: 'UNIT02 - Động từ' },
+  { unitName: 'Unit03 - Tính từ' },
+  { unitName: 'Unit04 - Danh từ' },
+  { unitName: 'Unit05 - Động từ' },
+  { unitName: 'Unit06 - Katakana' },
+  { unitName: 'Unit07 - Tính từ' },
+  { unitName: 'Unit08 - Phó từ' },
+  { unitName: 'Unit09 - Danh từ' },
+  { unitName: 'Unit10 - Động từ' },
+  { unitName: 'Unit11 - Katakana' },
 ];
 
-export {listUnit};
+export { listWord };

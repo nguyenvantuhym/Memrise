@@ -1,77 +1,85 @@
-import React, {useEffect, useContext, useState} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import React, { useEffect, useContext, useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {CommonActions} from '@react-navigation/native';
-
-import {Context} from '../context/ContextUser';
-import {COURSE_SCREEN, LIST_COURSE_SCREEN} from '../config/ScreenName';
+import { CommonActions } from '@react-navigation/native';
+import { Context } from '../context/ContextUser';
+import { LIST_COURSE_SCREEN, LOGIN_SCREEN } from '../config/ScreenName';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import ButtomCustome from '../components/ButtonCutome';
 import MyCourseItem from '../components/MyCourseItem';
-
-import {screenHeight, screenWidth} from './../helper/SizeScreen';
+import { screenHeight, screenWidth } from './../helper/SizeScreen';
 
 function MyCourseScreen(props) {
-  const {user} = useContext(Context);
-  const [courses, setCourses] = useState([]);
-  const {navigation} = props;
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      if (user) {
-        const myCourseRef = firestore()
-          .collection('myCourses')
-          .doc(user.uid);
+  const { user, listMyCourse, setListMyCourse } = useContext(Context);
+  const { navigation } = props;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchDataAndNavigate = () => {
+    if (user) {
+      console.log('fetch nayf !!!');
+      const myCourseRef = firestore()
+        .collection('myCourses')
+        .doc(user.uid);
+      myCourseRef.get().then(res => {
+        if (res.exists) {
+          const lscourse = res.data().listCourse ? res.data().listCourse : [];
+          setListMyCourse(lscourse);
+        } else {
+          myCourseRef.set({ listCourse: [] }).then(() => {
+            console.log(' thanhf cong nhes');
+          });
+        }
+      });
+    } else {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{ name: LOGIN_SCREEN }],
+        }),
+      );
+    }
+  };
 
-        myCourseRef.get().then(res => {
-          console.log('asdasd tutututu');
-          if (res.exists) {
-            const lscourse = res.data().listCourse ? res.data().listCourse : [];
-            setCourses(lscourse);
-          } else {
-            myCourseRef.set({listCourse: []}).then(() => {
-              console.log(' thanhf cong nhes');
-            });
-          }
-        });
-      } else {
-        navigation.dispatch(
-          CommonActions.reset({
-            index: 1,
-            routes: [{name: COURSE_SCREEN}],
-          }),
-        );
+  useEffect(() => {
+    let unMount = false;
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (unMount === false) {
+        fetchDataAndNavigate();
       }
     });
-    return unsubscribe;
-  }, [navigation, props, user]);
+    return () => {
+      unMount = true;
+      unsubscribe();
+    };
+  }, [fetchDataAndNavigate, navigation, props, setListMyCourse, user]);
+
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <FlatList
-        style={{paddingBottom: 30, backgroundColor:"red"}}
-          data={courses}
-          renderItem={({item}) => {
-            console.log(item);
-            return <MyCourseItem course={item} discription="Asdad" />;
+          contentContainerStyle={{ paddingBottom: 130 }}
+          data={listMyCourse}
+          renderItem={({ item }) => {
+            return (
+              <MyCourseItem
+                course={item}
+                navigation={navigation}
+                discription="Asdad"
+                afterDelete={fetchDataAndNavigate}
+              />
+            );
           }}
-          keyExtractor={item => item.id}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
       <LinearGradientBottom>
-        <View
-          style={{
-            height: '100%',
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+        <View style={styles.styleLinearGradient}>
           <ButtomCustome
             height={screenHeight(6)}
             width={screenWidth(70)}
             fontSize={20}
             title="Thêm khóa học khác"
             onPress={() => {
-              const {navigation} = props;
+              const { navigation } = props;
               navigation.navigate(LIST_COURSE_SCREEN);
             }}
           />
@@ -90,10 +98,10 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
-  LinearGradient: {
-    position: 'absolute',
-    bottom: 0,
-    height: 150,
+  styleLinearGradient: {
+    height: '100%',
     width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

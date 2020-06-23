@@ -1,28 +1,20 @@
-import React, {useContext} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {CommonActions} from '@react-navigation/native';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { CommonActions } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
 import logo from './../images/logos.png';
 import Cancel from './../images/cancel.png';
-import {LOGIN_SCREEN, COURSE_SCREEN} from '../config/ScreenName';
-import {Context} from './../context/ContextUser';
+import {
+  LOGIN_SCREEN,
+  COURSE_SCREEN,
+  MY_COURSE_SCREEN,
+} from '../config/ScreenName';
+import { Context } from './../context/ContextUser';
+import { screenWidth, screenHeight } from './../helper/SizeScreen';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
-const screenWidth = percent => (deviceWidth * percent) / 100;
-const screenHeight = percent => (deviceHeight * percent) / 100;
-
-export default function PlashScreen({navigation}) {
-  const {setUser} = useContext(Context);
+export default function PlashScreen({ navigation }) {
+  const { setUser } = useContext(Context);
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: ' ',
@@ -55,13 +47,13 @@ export default function PlashScreen({navigation}) {
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{name: COURSE_SCREEN}],
+          routes: [{ name: MY_COURSE_SCREEN }],
         }),
       );
     } else {
     }
   }
-  React.useEffect(() => {
+  useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   });

@@ -1,38 +1,28 @@
 import React from 'react';
-import {ActivityIndicator, StyleSheet, Dimensions, View} from 'react-native';
-import {Image, ListItem, Button} from 'react-native-elements';
+import { ActivityIndicator, StyleSheet, Dimensions, View } from 'react-native';
+import { Image, ListItem, Button } from 'react-native-elements';
+import { LoginManager } from 'react-native-fbsdk';
+
 import auth from '@react-native-firebase/auth';
 
-// // import avatar from '../assets/HoaHuongDuong.jpg';
 import userProFile from './../asset/user.png';
 import EmailProfile from './../asset/email.png';
+import { LOGIN_SCREEN } from './../config/ScreenName';
 
 const deviceWidth = Dimensions.get('window').width;
 const screen = percent => (deviceWidth * percent) / 100;
 
 export default class ProfileScreen extends React.Component {
-  // static navigationOptions = () => ({
-  //   title: 'Profile',
-  //   headerTitleAlign: 'center',
-  //   headerTitleStyle: {
-  //     color: 'white',
-  //   },
-  //   headerTintColor: 'white',
-  //   headerStyle: {
-  //     backgroundColor: '#006265',
-  //   },
-  // });
-
   constructor(props) {
     super(props);
-    this.state = {infoUser: {username: ''}};
+    this.state = { infoUser: { username: '' } };
   }
 
   componentDidMount = () => {
     // const { navigation } = this.props;
     auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({infoUser: user});
+        this.setState({ infoUser: user });
       } else {
         // No user is signed in
       }
@@ -40,22 +30,24 @@ export default class ProfileScreen extends React.Component {
   };
 
   logout = () => {
+    LoginManager.logOut();
     auth()
       .signOut()
       .then(() => {
+        const { navigation } = this.props;
         console.log('User signed out!');
-        // navigation.replace(LOGIN_SCREEN);
+        navigation.replace(LOGIN_SCREEN);
       });
   };
 
   render() {
-    const {infoUser} = this.state;
+    const { infoUser } = this.state;
     console.log(infoUser.photoURL);
     return (
       <View style={styles.container}>
         <View style={styles.ava}>
           <Image
-            source={{uri: `${infoUser.photoURL}?width=800&height=800`}}
+            source={{ uri: `${infoUser.photoURL}?width=800&height=800` }}
             style={styles.image}
             PlaceholderContent={<ActivityIndicator />}
           />
@@ -84,6 +76,12 @@ export default class ProfileScreen extends React.Component {
             title="Email"
             subtitle={infoUser.email}
             bottomDivider
+          />
+          <Button
+            onPress={this.logout}
+            title="Logout"
+            type="clear"
+            titleStyle={styles.logout}
           />
         </View>
       </View>

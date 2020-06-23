@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -8,43 +8,80 @@ import {
   ProgressBarAndroid,
   Alert,
 } from 'react-native';
-import deleteicon from './../asset/delete.png';
+import firestore from '@react-native-firebase/firestore';
 
-import {screenWidth} from './../helper/SizeScreen';
+import deleteicon from './../asset/delete.png';
+import { Context } from './../context/ContextUser';
+import { screenWidth } from './../helper/SizeScreen';
+import { COURSE_SCREEN } from '../config/ScreenName';
 
 function MyCourseItem(props) {
-  const {course} = props;
+  const { user } = useContext(Context);
+  const { course } = props;
+  const deleteCourse = () => {
+    const mycourseRef = firestore()
+      .collection('myCourses')
+      .doc(user.uid);
+    firestore()
+      .runTransaction(transaction => {
+        return transaction.get(mycourseRef).then(mycoursedata => {
+          if (!mycoursedata.exists) {
+            throw 'Document does not exist!';
+          }
+          const newMyCourseData = mycoursedata
+            .data()
+            .listCourse.filter(item => course.id !== item.id);
+          transaction.update(mycourseRef, {
+            listCourse: newMyCourseData,
+          });
+        });
+      })
+      .then(function() {
+        props.afterDelete();
+        console.log('Transaction successfully committed!');
+      })
+      .catch(function(error) {
+        console.log('Transaction failed: ', error);
+      });
+  };
+
+  const showAlert = () => {
+    Alert.alert(
+      'Cảnh báo',
+      `Bạn có thực sự muốn xóa khóa học ${course.courseName}`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => {
+            console.log('vantu');
+          },
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: deleteCourse },
+      ],
+      { cancelable: false },
+    );
+  };
+
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+      onPress={() =>
+        props.navigation.navigate(COURSE_SCREEN, { id: course.id })
+      }>
       <View style={styles.courseItem}>
         <View style={styles.img}>
-          <Image source={{uri: course.imgLogo}} style={styles.imgRound} />
+          <Image source={{ uri: course.imgLogo }} style={styles.imgRound} />
         </View>
         <View style={styles.header}>
           <View style={styles.HeaderMain}>
             <View style={styles.HeaderTitle}>
               <View style={styles.header}>
-                <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+                <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
                   {course.courseName}
                 </Text>
-                <Text style={{fontSize: 11}}>tututut</Text>
+                <Text style={{ fontSize: 11 }}>tututut</Text>
               </View>
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  Alert.alert(
-                    'Cảnh báo',
-                    `Bạn có thực sự muốn xóa khóa học ${course.courseName}`,
-                    [
-                      {
-                        text: 'Cancel',
-                        onPress: () => console.log('OK Pressed'),
-                        style: 'cancel',
-                      },
-                      {text: 'OK', onPress: () => {}},
-                    ],
-                    {cancelable: false},
-                  );
-                }}>
+              <TouchableWithoutFeedback onPress={showAlert}>
                 <View style={styles.iconDelete}>
                   <Image source={deleteicon} style={styles.imgDelete} />
                 </View>

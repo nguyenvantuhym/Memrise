@@ -1,47 +1,62 @@
-import React, {useEffect, useContext, useState} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import React, { useEffect, useContext, useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {CommonActions} from '@react-navigation/native';
-
-import {Context} from '../context/ContextUser';
-import {COURSE_SCREEN} from '../config/ScreenName';
+import { CommonActions } from '@react-navigation/native';
+import { Context } from '../context/ContextUser';
+import { COURSE_SCREEN } from '../config/ScreenName';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import ButtomCustome from '../components/ButtonCutome';
 import CourseItem from '../components/CourseItem';
-import {screenHeight, screenWidth} from './../helper/SizeScreen';
+import { screenHeight, screenWidth } from './../helper/SizeScreen';
 
 function ListCourseScreen(props) {
-  const {user} = useContext(Context);
+  const { user, listMyCourse } = useContext(Context);
   const [courses, setCourses] = useState([]);
+  const { navigation } = props;
   useEffect(() => {
-    console.log(user);
-    const {navigation} = props;
-    // console.log(user);
+    let mapListCourse = {};
+    listMyCourse.forEach(element => {
+      mapListCourse[element.id] = element;
+    });
+
     if (user) {
       firestore()
         .collection('courses')
         .get()
         .then(res => {
-          setCourses(res.docs.map(doc => ({id: doc.id, ...doc.data()})));
+          const arrco = res.docs.reduce((arr, course) => {
+            if (mapListCourse[course.id] === undefined) {
+              return [...arr, { id: course.id, ...course.data() }];
+            } else {
+              return arr;
+            }
+          }, []);
+          setCourses(arrco);
         });
     } else {
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{name: COURSE_SCREEN}],
+          routes: [{ name: COURSE_SCREEN }],
         }),
       );
     }
-  }, [props, user]);
+  }, [listMyCourse, navigation, props, user]);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <FlatList
+          contentContainerStyle={{ paddingBottom: 130 }}
           data={courses}
-          renderItem={({item}) => {
-            console.log(item);
-            return <CourseItem course={item} discription="Asdad" />;
+          renderItem={({ item }) => {
+            return (
+              <CourseItem
+                navigation={navigation}
+                course={item}
+                discription="Asdad"
+              />
+            );
           }}
           keyExtractor={item => item.id}
         />
@@ -60,7 +75,7 @@ function ListCourseScreen(props) {
             fontSize={20}
             title="Thêm khóa học khác"
             onPress={() => {
-              const {navigation} = props;
+              const { navigation } = props;
               //navigation.navigate(LIST_COURSE_SCREEN);
             }}
           />

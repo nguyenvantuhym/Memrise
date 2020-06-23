@@ -1,31 +1,31 @@
-import React from 'react';
-import {Text, Image, View, StyleSheet, Dimensions} from 'react-native';
-import {Button} from 'react-native-elements';
+import React, { useEffect, useState } from 'react';
+import { Text, Image, View, StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
 import tree0 from '../images/demo.png';
 import speaker from '../images/speaker.png';
-import {TEST_SCREEN} from './../config/ScreenName';
+import { TEST_SCREEN } from './../config/ScreenName';
+import { screenHeight, screenWidth } from './../helper/SizeScreen';
+import firestore from '@react-native-firebase/firestore';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
-const screenWidth = percent => (deviceWidth * percent) / 100;
-const screenHeight = percent => (deviceHeight * percent) / 100;
-
-const Top = props => (
-  <View style={TopStyle.top}>
-    <View style={TopStyle.topLeft}>
-      <Text style={TopStyle.kanjiText}>Kanji</Text>
-      <Text>y nghia</Text>
-      <Image source={speaker} style={TopStyle.speaker} />
-      <View>
-        <Text style={TopStyle.textStyle}>KANJI</Text>
-        <Text>Mean</Text>
+const Top = props => {
+  const { word } = props;
+  return (
+    <View style={TopStyle.top}>
+      <View style={TopStyle.topLeft}>
+        <Text style={TopStyle.kanjiText}>{word.wordOrigin}</Text>
+        <Text>{word.wordMean}</Text>
+        <Image source={speaker} style={TopStyle.speaker} />
+        <View>
+          <Text style={TopStyle.textStyle}>KANJI</Text>
+          <Text>Mean</Text>
+        </View>
       </View>
+      <Image style={styles.wordImage} source={tree0} />
     </View>
-    <Image style={styles.wordImage} source={tree0} />
-  </View>
-);
+  );
+};
 const TopStyle = StyleSheet.create({
-  textStyle: {color: 'red', fontWeight: 'bold'},
+  textStyle: { color: 'red', fontWeight: 'bold' },
   kanjiText: {
     fontSize: 25,
     fontWeight: 'bold',
@@ -52,7 +52,7 @@ const Center = props => (
     <View style={CenterStyle.container}>
       <Text>sdkskdfj</Text>
     </View>
-    <View style={{height: screenHeight(8)}} />
+    <View style={{ height: screenHeight(8) }} />
   </View>
 );
 const CenterStyle = StyleSheet.create({
@@ -70,7 +70,7 @@ const CenterStyle = StyleSheet.create({
   },
 });
 
-const ButtonBottom = ({navigation}) => (
+const ButtonBottom = ({ navigation }) => (
   <View style={styleButtonBottom.bottom}>
     <Button
       title="TIẾP TỤC"
@@ -96,14 +96,26 @@ const styleButtonBottom = StyleSheet.create({
     width: screenWidth(90),
     height: screenHeight(8),
   },
-  fontTextButton: {fontSize: 20, color: '#000', fontWeight: '700'},
+  fontTextButton: { fontSize: 20, color: '#000', fontWeight: '700' },
 });
 
-export default function WordDetailScreen({navigation}) {
+export default function WordDetailScreen({ route, navigation }) {
+  const { id } = route.params;
+  const [word, setWord] = useState({});
+  useEffect(() => {
+    firestore()
+      .collection('words')
+      .doc(id)
+      .get()
+      .then(wordres => {
+        setWord(wordres.data());
+        console.log(wordres.data());
+      });
+  }, [id]);
   return (
     <View style={styles.containerCenter}>
       <View style={styles.container}>
-        <Top />
+        <Top word={word} />
         <Center />
       </View>
       <ButtonBottom navigation={navigation} />

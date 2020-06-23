@@ -1,4 +1,4 @@
-import React, {useContext, useReducer} from 'react';
+import React, { useContext } from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,13 @@ import {
   Alert,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import {screenWidth} from '../helper/SizeScreen';
-import {Context} from './../context/ContextUser';
+import { screenWidth } from '../helper/SizeScreen';
+import { Context } from './../context/ContextUser';
+import { MY_COURSE_SCREEN } from '../config/ScreenName';
 
 function CourseItem(props) {
-  const {user} = useContext(Context);
-  const {course} = props;
+  const { user } = useContext(Context);
+  const { course } = props;
   const AddCourse = () => {
     const mycourseRef = firestore()
       .collection('myCourses')
@@ -21,10 +22,9 @@ function CourseItem(props) {
     firestore()
       .runTransaction(transaction => {
         return transaction.get(mycourseRef).then(mycoursedata => {
-          // if (!mycoursedata.exists) {
-          //   throw 'Document does not exist!';
-          // }
-
+          if (!mycoursedata.exists) {
+            throw 'Document does not exist!';
+          }
           mycoursedata.data().listCourse.push({
             id: course.id,
             courseName: course.courseName,
@@ -41,6 +41,7 @@ function CourseItem(props) {
         });
       })
       .then(function() {
+        props.navigation.navigate(MY_COURSE_SCREEN);
         console.log('Transaction successfully committed!');
       })
       .catch(function(error) {
@@ -60,20 +61,20 @@ function CourseItem(props) {
               onPress: () => console.log('OK Pressed'),
               style: 'cancel',
             },
-            {text: 'OK', onPress: AddCourse},
+            { text: 'OK', onPress: AddCourse },
           ],
-          {cancelable: false},
+          { cancelable: false },
         );
       }}>
       <View style={styles.courseItem}>
         <View style={styles.img}>
-          <Image source={{uri: course.imgLogo}} style={styles.imgRound} />
+          <Image source={{ uri: course.imgLogo }} style={styles.imgRound} />
         </View>
         <View style={styles.content}>
-          <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+          <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
             {course.courseName}
           </Text>
-          <Text style={{fontSize: 12}}>tututut</Text>
+          <Text style={{ fontSize: 12 }}>tututut</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>

@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {screenHeight} from './../helper/SizeScreen';
+import { screenHeight } from './../helper/SizeScreen';
 
 const LinearGradientBottom = props => {
   return (
