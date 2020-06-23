@@ -3,11 +3,15 @@ import {
   View,
   StyleSheet,
   Text,
-  Dimensions,
+  TouchableOpacity,
   PixelRatio,
   Image,
 } from 'react-native';
 import icon from './../asset/demo2.png';
+
+import logo from './../images/logos.png';
+import Cancel from './../images/cancel.png';
+import { screenHeight, screenWidth } from './../helper/SizeScreen';
 // const deviceHeight = Dimensions.get('window').height;
 
 // const screenHeight = percent => (percent * deviceHeight) / 100;
@@ -40,7 +44,34 @@ const answerStyle = StyleSheet.create({
   },
 });
 
-const TestScreen = () => {
+const TestScreen = ({ navigation }) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      title: ' ',
+      headerNone: true,
+      headerStyle: {
+        backgroundColor: '#80d0bb',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+      headerLeft: () => (
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate();
+          }}>
+          <Image style={styles.cancel} source={Cancel} />
+        </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <View style={styles.scores}>
+          <Text style={styles.number}>10</Text>
+        </View>
+      ),
+    });
+  }, [navigation]);
+
   React.useEffect(() => {
     // const user = await firestore()
     //   .collection('Users')
@@ -73,7 +104,7 @@ const TestScreen = () => {
         <Answer />
         <Answer />
       </View>
-      <View style={{height: 90, width: '100%'}} />
+      <View style={{ height: 90, width: '100%' }} />
     </View>
   );
 };
@@ -107,5 +138,23 @@ const styles = StyleSheet.create({
     color: '#2b343f',
     fontSize: 25,
     fontWeight: 'bold',
+  },
+  scores: {
+    paddingHorizontal: screenWidth(7),
+    paddingTop: screenWidth(1),
+    paddingBottom: screenWidth(1),
+    backgroundColor: '#78c5b0',
+    marginRight: 10,
+    borderRadius: screenWidth(4),
+  },
+  number: {
+    color: '#2a3546',
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  cancel: {
+    height: 24,
+    width: 24,
+    marginLeft: screenWidth(4),
   },
 });

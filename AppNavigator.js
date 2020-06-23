@@ -7,8 +7,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import CourseScreen from './screens/CourseScreen';
 import SelectCourseScreen from './screens/ListCourseScreent';
@@ -38,205 +38,209 @@ import MenuIMG from './asset/menu.png';
 import ProfileIMG from './images/user.png';
 import SettingsIMG from './images/gear.png';
 import Cancel from './images/cancel.png';
+import { screenHeight, screenWidth } from './helper/SizeScreen';
 
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
-const screenWidth = percent => (deviceWidth * percent) / 100;
-const screenHeight = percent => (deviceHeight * percent) / 100;
+const StackRoot = createStackNavigator();
+const StackMain = createStackNavigator();
+const StackLogin = createStackNavigator();
 
-const Stack = createStackNavigator();
+function StackMainScreen() {
+  return (
+    <StackMain.Navigator>
+      <StackMain.Screen
+        name={MY_COURSE_SCREEN}
+        component={MyCourseScreen}
+        options={({ navigation }) => ({
+          title: 'Các khóa học của bạn',
+          headerStyle: {
+            backgroundColor: '#2a3546',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(LIST_COURSE_SCREEN);
+              }}>
+              <Image style={styles.header} source={MenuIMG} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(PROFILE_SCREEN);
+              }}>
+              <Image style={styles.profile} source={ProfileIMG} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <StackMain.Screen
+        name={TEST_SCREEN}
+        component={TestScreen}
+        options={({ navigation }) => ({
+          title: ' ',
+          headerStyle: {
+            backgroundColor: '#80d0bb',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                // navigation.navigate(COURSE_SCREEN);
+              }}>
+              <Image style={styles.cancel} source={Cancel} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <View style={styles.scores}>
+              <Text style={styles.number}>10</Text>
+            </View>
+          ),
+        })}
+      />
+      <StackMain.Screen
+        name={UNIT_SCREEN}
+        component={SectionScreen}
+        options={({ navigation }) => ({
+          title: 'Mimi kara oboeru N3',
+          headerStyle: {
+            backgroundColor: '#2a3546',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        })}
+      />
+      <StackMain.Screen
+        name={COURSE_SCREEN}
+        component={CourseScreen}
+        options={({ navigation }) => ({
+          title: 'Mimi kara ooeru N3',
+          headerStyle: {
+            backgroundColor: '#2a3546',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(MY_COURSE_SCREEN);
+              }}>
+              <Image style={styles.header} source={MenuIMG} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(PROFILE_SCREEN);
+              }}>
+              <Image style={styles.profile} source={ProfileIMG} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
 
-function App() {
+      <StackMain.Screen
+        name={LIST_COURSE_SCREEN}
+        component={SelectCourseScreen}
+        options={({ navigation }) => ({
+          title: 'Khóa học',
+          headerStyle: {
+            backgroundColor: '#2a3546',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        })}
+      />
+      <StackMain.Screen
+        name={WORD_DETAIL_SCREEN}
+        component={WordDetailScreen}
+        options={({ navigation }) => ({
+          title: '1/380',
+          headerStyle: {
+            backgroundColor: '#2a3546',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        })}
+      />
+      <StackMain.Screen
+        name={PROFILE_SCREEN}
+        component={ProfileScreen}
+        options={({ navigation }) => ({
+          title: 'Hồ sơ',
+          headerStyle: {
+            backgroundColor: '#2a3546',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(SETTING_SCREEN);
+              }}>
+              <Image style={styles.settings} source={SettingsIMG} />
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <StackMain.Screen
+        name={SETTING_SCREEN}
+        component={SettingScreen}
+        options={({ navigation }) => ({
+          title: 'Cài đặt',
+          headerStyle: {
+            backgroundColor: '#2a3546',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        })}
+      />
+    </StackMain.Navigator>
+  );
+}
+function LoginStackScreen() {
+  return (
+    <StackLogin.Navigator mode="modal" headerMode="none">
+      <StackLogin.Screen name={FLASH_SCREEN} component={FlashScreen} />
+      <StackLogin.Screen name={LOGIN_SCREEN} component={LoginScreen} />
+    </StackLogin.Navigator>
+  );
+}
+
+function RootStackScreen() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name={FLASH_SCREEN}
-          component={FlashScreen}
-          options={({navigation}) => ({
-            title: 'Mimi kara oboeru N3',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          })}
+      <StackRoot.Navigator mode="modal" headerMode="none">
+        <StackRoot.Screen name={'STACK_LOGIN'} component={LoginStackScreen} />
+        <StackRoot.Screen
+          name="StackMainScreen"
+          component={StackMainScreen}
+          options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name={TEST_SCREEN}
-          component={TestScreen}
-          options={({navigation}) => ({
-            title: ' ',
-            headerStyle: {
-              backgroundColor: '#80d0bb',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate(COURSE_SCREEN);
-                }}>
-                <Image style={styles.cancel} source={Cancel} />
-              </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <View style={styles.scores}>
-                <Text style={styles.number}>10</Text>
-              </View>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name={UNIT_SCREEN}
-          component={SectionScreen}
-          options={({navigation}) => ({
-            title: 'Mimi kara oboeru N3',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          })}
-        />
-        <Stack.Screen
-          name={COURSE_SCREEN}
-          component={CourseScreen}
-          options={({navigation}) => ({
-            title: 'Mimi kara ooeru N3',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate(MY_COURSE_SCREEN);
-                }}>
-                <Image style={styles.header} source={MenuIMG} />
-              </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate(PROFILE_SCREEN);
-                }}>
-                <Image style={styles.profile} source={ProfileIMG} />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-
-        <Stack.Screen
-          name={MY_COURSE_SCREEN}
-          component={MyCourseScreen}
-          options={({ navigation }) => ({
-            title: 'Các khóa học của bạn',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerLeft: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate(LIST_COURSE_SCREEN);
-                }}>
-                <Image style={styles.header} source={MenuIMG} />
-              </TouchableOpacity>
-            ),
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate(PROFILE_SCREEN);
-                }}>
-                <Image style={styles.profile} source={ProfileIMG} />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
-        <Stack.Screen
-          name={LIST_COURSE_SCREEN}
-          component={SelectCourseScreen}
-          options={({navigation}) => ({
-            title: 'Khóa học',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          })}
-        />
-        <Stack.Screen
-          name={WORD_DETAIL_SCREEN}
-          component={WordDetailScreen}
-          options={({navigation}) => ({
-            title: '1/380',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          })}
-        />
-        <Stack.Screen
-          name={PROFILE_SCREEN}
-          component={ProfileScreen}
-          options={({navigation}) => ({
-            title: 'Hồ sơ',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate(SETTING_SCREEN);
-                }}>
-                <Image style={styles.settings} source={SettingsIMG} />
-              </TouchableOpacity>
-            ),
-          })}
-        />
-        <Stack.Screen
-          name={SETTING_SCREEN}
-          component={SettingScreen}
-          options={({navigation}) => ({
-            title: 'Cài đặt',
-            headerStyle: {
-              backgroundColor: '#2a3546',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          })}
-        />
-      </Stack.Navigator>
+      </StackRoot.Navigator>
     </NavigationContainer>
   );
 }
 
-export default App;
+export default RootStackScreen;
 
 // const styleTitle = (navigation, ScreenName) => ({
 //   title: 'Mimi kara oboeru N3',

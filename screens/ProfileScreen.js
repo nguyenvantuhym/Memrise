@@ -36,7 +36,7 @@ export default class ProfileScreen extends React.Component {
       .then(() => {
         const { navigation } = this.props;
         console.log('User signed out!');
-        navigation.replace(LOGIN_SCREEN);
+        navigation.replace('STACK_LOGIN');
       });
   };
 

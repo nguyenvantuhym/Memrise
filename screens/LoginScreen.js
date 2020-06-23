@@ -1,12 +1,5 @@
-import React, { useContext } from 'react';
-import {
-  Button,
-  View,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import logo from './../images/logos.png';
 import facebook from './../images/facebook.png';
@@ -26,8 +19,8 @@ GoogleSignin.configure({
     '350479807541-rmgoa2v72ij7f0nakcjn1c1nc4junuml.apps.googleusercontent.com',
 });
 
-export default function CourseScreen(props) {
-  const {user, setUser } = useContext(Context);
+export default function LoginScreen(props) {
+  const { user, setUser } = useContext(Context);
   const { navigation } = props;
   function onAuthStateChanged(user) {
     if (user) {
@@ -37,21 +30,13 @@ export default function CourseScreen(props) {
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{ name: MY_COURSE_SCREEN }],
+          routes: [{ name: 'StackMainScreen' }],
         }),
       );
     } else {
     }
   }
-  React.useEffect(() => {
-    // auth()
-    //   .signOut()
-    //   .then(() => console.log('User signed out!'));
-    // const user = await firestore()
-    //   .collection('Users')
-    //   .doc('us')
-    //   .get();
-    // console.log(user.data());
+  useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   });

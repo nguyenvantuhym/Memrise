@@ -15,39 +15,15 @@ import { screenWidth, screenHeight } from './../helper/SizeScreen';
 
 export default function PlashScreen({ navigation }) {
   const { setUser } = useContext(Context);
-  React.useLayoutEffect(() => {
-    navigation.setOptions({
-      title: ' ',
-      headerStyle: {
-        backgroundColor: '#80d0bb',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-      headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate(COURSE_SCREEN);
-          }}>
-          <Image style={styles.cancel} source={Cancel} />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <View style={styles.scores}>
-          <Text style={styles.number}>10</Text>
-        </View>
-      ),
-    });
-  }, [navigation]);
 
   function onAuthStateChanged(userRes) {
     if (userRes) {
       setUser(userRes);
+      //navigation.navigate('StackMainScreen');
       navigation.dispatch(
         CommonActions.reset({
           index: 1,
-          routes: [{ name: MY_COURSE_SCREEN }],
+          routes: [{ name: 'StackMainScreen' }],
         }),
       );
     } else {
@@ -137,23 +113,5 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     paddingHorizontal: 30,
-  },
-  scores: {
-    paddingHorizontal: screenWidth(7),
-    paddingTop: screenWidth(1),
-    paddingBottom: screenWidth(1),
-    backgroundColor: '#78c5b0',
-    marginRight: 10,
-    borderRadius: screenWidth(4),
-  },
-  number: {
-    color: '#2a3546',
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  cancel: {
-    height: 24,
-    width: 24,
-    marginLeft: screenWidth(4),
   },
 });
