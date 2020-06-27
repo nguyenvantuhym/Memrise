@@ -14,6 +14,7 @@ function ListCourseScreen(props) {
   const [courses, setCourses] = useState([]);
   const { navigation } = props;
   useEffect(() => {
+    let unMount = false;
     let mapListCourse = {};
     listMyCourse.forEach(element => {
       mapListCourse[element.id] = element;
@@ -31,7 +32,10 @@ function ListCourseScreen(props) {
               return arr;
             }
           }, []);
-          setCourses(arrco);
+          console.log('a');
+          if (unMount === false) {
+            setCourses(arrco);
+          }
         });
     } else {
       navigation.dispatch(
@@ -41,6 +45,9 @@ function ListCourseScreen(props) {
         }),
       );
     }
+    return () => {
+      unMount = true;
+    };
   }, [listMyCourse, navigation, props, user]);
 
   return (
@@ -54,7 +61,7 @@ function ListCourseScreen(props) {
               <CourseItem
                 navigation={navigation}
                 course={item}
-                discription="Asdad"
+                discription=""
               />
             );
           }}
@@ -62,24 +69,7 @@ function ListCourseScreen(props) {
         />
       </View>
       <LinearGradientBottom>
-        <View
-          style={{
-            height: '100%',
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ButtomCustome
-            height={screenHeight(6)}
-            width={screenWidth(70)}
-            fontSize={20}
-            title="Thêm khóa học khác"
-            onPress={() => {
-              const { navigation } = props;
-              //navigation.navigate(LIST_COURSE_SCREEN);
-            }}
-          />
-        </View>
+        <View />
       </LinearGradientBottom>
     </View>
   );

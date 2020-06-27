@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useContext, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
@@ -20,8 +21,9 @@ function MyCourseScreen(props) {
         .collection('myCourses')
         .doc(user.uid);
       myCourseRef.get().then(res => {
+        const lscourse = res.data().listCourse ? res.data().listCourse : [];
+        console.log(lscourse);
         if (res.exists) {
-          const lscourse = res.data().listCourse ? res.data().listCourse : [];
           setListMyCourse(lscourse);
         } else {
           myCourseRef.set({ listCourse: [] }).then(() => {
@@ -50,7 +52,7 @@ function MyCourseScreen(props) {
       unMount = true;
       unsubscribe();
     };
-  }, [fetchDataAndNavigate, navigation, props, setListMyCourse, user]);
+  }, [fetchDataAndNavigate, navigation, props, setListMyCourse]);
 
   return (
     <View style={styles.container}>
@@ -72,18 +74,16 @@ function MyCourseScreen(props) {
         />
       </View>
       <LinearGradientBottom>
-        <View style={styles.styleLinearGradient}>
-          <ButtomCustome
-            height={screenHeight(6)}
-            width={screenWidth(70)}
-            fontSize={20}
-            title="Thêm khóa học khác"
-            onPress={() => {
-              const { navigation } = props;
-              navigation.navigate(LIST_COURSE_SCREEN);
-            }}
-          />
-        </View>
+        <ButtomCustome
+          height={screenHeight(6)}
+          width={screenWidth(70)}
+          fontSize={20}
+          title="Thêm khóa học khác"
+          onPress={() => {
+            const { navigation } = props;
+            navigation.navigate(LIST_COURSE_SCREEN);
+          }}
+        />
       </LinearGradientBottom>
     </View>
   );

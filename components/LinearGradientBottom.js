@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { screenHeight } from './../helper/SizeScreen';
 
@@ -8,7 +8,15 @@ const LinearGradientBottom = props => {
     <LinearGradient
       colors={['#ffffff33', '#fff']}
       style={styles.LinearGradientStyle}>
+      <View
+        style={{
+          height: '100%',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
       {props.children}
+      </View>
     </LinearGradient>
   );
 };

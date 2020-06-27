@@ -1,48 +1,20 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
+  Alert,
   Text,
   TouchableOpacity,
-  PixelRatio,
   Image,
 } from 'react-native';
-import icon from './../asset/demo2.png';
-
-import logo from './../images/logos.png';
+import Provider from './../context/ContextTest';
+import firestore from '@react-native-firebase/firestore';
+import Quere from './../helper/Quere';
 import Cancel from './../images/cancel.png';
-import { screenHeight, screenWidth } from './../helper/SizeScreen';
-// const deviceHeight = Dimensions.get('window').height;
-
-// const screenHeight = percent => (percent * deviceHeight) / 100;
-
-// import firestore from '@react-native-firebase/firestore';
-
-const Answer = props => (
-  <View style={answerStyle.itemAnswerContainer}>
-    <Text>元気</Text>
-  </View>
-);
-
-const answerStyle = StyleSheet.create({
-  itemAnswerContainer: {
-    width: '48%',
-    height: '30%',
-    marginHorizontal: '1%',
-    borderRadius: 5,
-    borderBottomWidth: 0,
-    shadowColor: '#000',
-    borderWidth: 1,
-    borderColor: '#fff',
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    marginTop: '2%',
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+import { screenWidth } from './../helper/SizeScreen';
+import FlatListQuiz from './../components/FlatListQuiz';
+// import { COURSE_SCREEN } from './../config/ScreenName';
 
 const TestScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
@@ -59,7 +31,7 @@ const TestScreen = ({ navigation }) => {
       headerLeft: () => (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate();
+            navigation.goBack();
           }}>
           <Image style={styles.cancel} source={Cancel} />
         </TouchableOpacity>
@@ -72,73 +44,184 @@ const TestScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
-  React.useEffect(() => {
-    // const user = await firestore()
-    //   .collection('Users')
-    //   .doc('us')
-    //   .get();
-    // console.log(user.data());
-  });
+  // const [listAnswer, setListAnswer] = useState([]);
+  // React.useEffect(() => {
+  //   firestore()
+  //     .collection('words')
+  //     .where('unitId', '==', 'dlmWpLRDe98qvxLrlVMO')
+  //     .get()
+  //     .then(res => {
+  //       let i = 0;
+  //       res.forEach(wordres => {
+  //         i++;
+  //         let data = wordres.data();
+  //         let id = wordres.id;
+  //         listWords[data.index] = { id: id, ...data };
+  //       });
+  //       listWords.length = i;
+  //       nextQuestion();
+  //     });
+  // }, [listWords, nextQuestion]);
+
+  // let listWords = {};
+  // let listQuere = [];
+  // // init listQuere
+  // for (let i = 0; i < 7; i++) {
+  //   // khởi tạo queue learning
+  //   let quereTmp = new Quere();
+  //   if (i === 0) {
+  //     quereTmp.setSize(1);
+  //   } else if (i === 1) {
+  //     quereTmp.setSize(2);
+  //   } else if (i === 2) {
+  //     quereTmp.setSize(3);
+  //   } else if (i === 3) {
+  //     quereTmp.setSize(5);
+  //   } else {
+  //     quereTmp.setSize(7);
+  //   }
+  //   listQuere.push(quereTmp);
+  // }
+  // let listWordReview = new Quere();
+  // listWordReview.setSize(100);
+  // const limitWord = 5;
+  // let countWord = 0;
+  // let indexLearned = 0;
+  // let indexLearning = 0;
+
+  // const checkLearningFinish = () => {
+  //   let finish = true;
+  //   for (let i = 0; i < 7; i++) {
+  //     if (listQuere[i].isEmpty() === false) {
+  //       finish = false;
+  //     }
+  //   }
+  //   return finish;
+  // };
+  // const GenerateAnswerRamdom = index => {
+  //   let lsAnswer = [];
+  //   const random = Math.floor(Math.random() * 6);
+  //   for (let i = 0; i < 6; i++) {
+  //     if (index + ((random + i) % 6) < listWords.length) {
+  //       lsAnswer.push({
+  //         word: listWords[index + ((random + i) % 6)],
+  //         isAnswer: (random + i) % 6 === 0,
+  //       });
+  //     } else {
+  //       lsAnswer.push({
+  //         word: listWords[index - ((random + i) % 6)],
+  //         isAnswer: (random + i) % 6 === 0,
+  //       });
+  //     }
+  //   }
+  //   setListAnswer(lsAnswer);
+  // };
+
+  // const moveWordToNextQueue = i => {
+  //   if (checkLearningFinish() === true) {
+  //     console.log('finish roi banj owi okokokokoko');
+  //     console.log(listWordReview.length());
+  //   } else {
+  //     const word = listQuere[i].peek();
+  //     GenerateAnswerRamdom(word.index);
+  //     Alert.alert(
+  //       `hoc lan ${i + 1} :chữ kanji:  ${word.wordOrigin}`,
+  //       `nghia : ${word.wordMean}`,
+  //       [
+  //         {
+  //           text: 'Cancel',
+  //           onPress: () => console.log('Cancel Pressed'),
+  //           style: 'cancel',
+  //         },
+  //         {
+  //           text: 'OK',
+  //           onPress: () => {
+  //             console.log('OK Pressed');
+  //             listQuere[i].dequeue();
+  //             if (i === 6) {
+  //               listWordReview.enqueue(word);
+  //             } else {
+  //               listQuere[i + 1].enqueue(word);
+  //             }
+  //             nextQuestion();
+  //           },
+  //         },
+  //       ],
+  //       { cancelable: false },
+  //     );
+  //   }
+  // };
+
+  // const ShowAlert = word => {
+  //   Alert.alert(
+  //     `chữ kanji:  ${word.wordOrigin}`,
+  //     `nghia : ${word.wordMean}`,
+  //     [
+  //       {
+  //         text: 'Cancel',
+  //         onPress: () => console.log('Cancel Pressed'),
+  //         style: 'cancel',
+  //       },
+  //       {
+  //         text: 'OK',
+  //         onPress: () => {
+  //           nextQuestion();
+  //           console.log('OK Pressed');
+  //         },
+  //       },
+  //     ],
+  //     { cancelable: false },
+  //   );
+  // };
+
+  // const addToListQueue = word => {
+  //   listQuere[0].enqueue(word);
+  //   GenerateAnswerRamdom(word.index);
+  //   ShowAlert(word);
+  //   indexLearning++;
+  //   countWord++;
+  // };
+
+  // const nextQuestion = () => {
+  //   // các từ được chuyển qua các queue dựa trên độ ưu tiên là queue nào đó bị đầy ,
+  //   // queue nào đầy sẽ được chuyển trước để trảnh trường hợp bị full queue
+  //   let queueFullIndex = -1;
+  //   for (let i = 0; i < 7; i++) {
+  //     if (listQuere[i].isFull() === true) {
+  //       queueFullIndex = i;
+  //       break;
+  //     }
+  //   }
+  //   if (queueFullIndex === -1) {
+  //     if (countWord < limitWord) {
+  //       // trường hợp số từ được thêm vào list queue chưa vượt quá giới hạn cho phép
+  //       addToListQueue(listWords[indexLearning]);
+  //     } else {
+  //       // nếu trường hợp không có queue nào đẩy trong danh sách
+  //       for (let i = 0; i < 7; i++) {
+  //         if (listQuere[i].isEmpty() === false) {
+  //           // kiếm queue nào có phần tử để chuyển word từ queue đó sang queue tiêp theo
+  //           queueFullIndex = i;
+  //           break;
+  //         }
+  //       }
+  //       moveWordToNextQueue(queueFullIndex);
+  //     }
+  //   } else {
+  //     // trường hợp có queue ở vị trí queueFullIndex đầy
+  //     moveWordToNextQueue(queueFullIndex);
+  //   }
+  // };
 
   return (
-    <View style={styles.screen}>
-      <View style={styles.QuestionContainer}>
-        <View style={styles.Question}>
-          <Text style={styles.TextQuestion}>Được chuyển đến, đạt được</Text>
-        </View>
-        <View style={styles.imgProgress}>
-          <Image
-            source={icon}
-            style={{
-              width: PixelRatio.getPixelSizeForLayoutSize(20),
-              height: PixelRatio.getPixelSizeForLayoutSize(25),
-            }}
-          />
-        </View>
-      </View>
-      <View style={styles.AnswerContainer}>
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-        <Answer />
-      </View>
-      <View style={{ height: 90, width: '100%' }} />
-    </View>
+    <Provider>
+      <FlatListQuiz navigation={navigation} />
+    </Provider>
   );
 };
 
 export default TestScreen;
 const styles = StyleSheet.create({
-  screen: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#f2f2f2',
-  },
-  QuestionContainer: {
-    flex: 1,
-    padding: '5%',
-    paddingBottom: 0,
-    flexDirection: 'row',
-  },
-  AnswerContainer: {
-    flex: 3,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: '4%',
-  },
-  imgProgress: {
-    flex: 2,
-  },
-  Question: {
-    flex: 10,
-  },
-  TextQuestion: {
-    color: '#2b343f',
-    fontSize: 25,
-    fontWeight: 'bold',
-  },
   scores: {
     paddingHorizontal: screenWidth(7),
     paddingTop: screenWidth(1),
