@@ -94,7 +94,13 @@ function StackMainScreen() {
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => {
+<<<<<<< HEAD
                 navigation.navigate(COURSE_SCREEN);
+=======
+                //console.log("asdasd");
+                navigation.goBack();
+                // navigation.navigate(COURSE_SCREEN);
+>>>>>>> 1fc71fdb13d0b330464eb25310c75a5a49708beb
               }}>
               <Image style={styles.cancel} source={Cancel} />
             </TouchableOpacity>

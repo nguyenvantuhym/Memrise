@@ -16,7 +16,7 @@ import { screenWidth } from './../helper/SizeScreen';
 import { COURSE_SCREEN } from '../config/ScreenName';
 
 function MyCourseItem(props) {
-  const { user } = useContext(Context);
+  const { user, setMyCourseCurrent } = useContext(Context);
   const { course } = props;
   const deleteCourse = () => {
     const mycourseRef = firestore()
@@ -65,9 +65,10 @@ function MyCourseItem(props) {
 
   return (
     <TouchableWithoutFeedback
-      onPress={() =>
-        props.navigation.navigate(COURSE_SCREEN, { id: course.id })
-      }>
+      onPress={() => {
+        setMyCourseCurrent(course);
+        props.navigation.navigate(COURSE_SCREEN, { id: course.id });
+      }}>
       <View style={styles.courseItem}>
         <View style={styles.img}>
           <Image source={{ uri: course.imgLogo }} style={styles.imgRound} />
@@ -76,10 +77,10 @@ function MyCourseItem(props) {
           <View style={styles.HeaderMain}>
             <View style={styles.HeaderTitle}>
               <View style={styles.header}>
-                <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
+                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                   {course.courseName}
                 </Text>
-                <Text style={{ fontSize: 11 }}>tututut</Text>
+                <Text style={{ fontSize: 12 }}>tututut</Text>
               </View>
               <TouchableWithoutFeedback onPress={showAlert}>
                 <View style={styles.iconDelete}>

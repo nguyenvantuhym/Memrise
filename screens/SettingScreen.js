@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -20,7 +20,7 @@ const deviceWidth = Dimensions.get('window').width;
 const screenWidth = percent => (deviceWidth * percent) / 100;
 const screenHeight = percent => (deviceHeight * percent) / 100;
 
-export default function SettingScreen({naviagtion}) {
+export default function SettingScreen({ naviagtion }) {
   const [selectedValue, setSelectedValue] = useState('3');
   const [selectedValueReview, setSelectedValueReview] = useState('5');
   const [isEnabledFacebook, setIsEnabledFacebook] = useState(false);
@@ -49,7 +49,7 @@ export default function SettingScreen({naviagtion}) {
             <Image style={styles.logo} source={facebook} alt="free" />
             <Text style={styles.title}>Kết nối với facebook</Text>
             <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
               thumbColor={isEnabledFacebook ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitchFacebook}
@@ -64,7 +64,7 @@ export default function SettingScreen({naviagtion}) {
             <Image style={styles.logo} source={lightDark} alt="free" />
             <Text style={styles.title}>Chế độ Nền tối</Text>
             <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
               thumbColor={isEnabledLight ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitchLight}
@@ -79,7 +79,7 @@ export default function SettingScreen({naviagtion}) {
           <View style={styles.content}>
             <Text style={styles.titleSecond}>Kiểm tra sắp xếp từ</Text>
             <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
               thumbColor={isEnabledSort ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitchSort}
@@ -95,7 +95,7 @@ export default function SettingScreen({naviagtion}) {
             <Text style={styles.titleSecond}>Từ mỗi tiết học</Text>
             <Picker
               selectedValue={selectedValue}
-              style={{height: 20, width: 85}}
+              style={{ height: 20, width: 85 }}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedValue(itemValue)
               }>
@@ -109,7 +109,7 @@ export default function SettingScreen({naviagtion}) {
             <Text style={styles.titleSecond}>Từ mỗi tiết ôn tập</Text>
             <Picker
               selectedValue={selectedValueReview}
-              style={{height: 20, width: 85}}
+              style={{ height: 20, width: 85 }}
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedValueReview(itemValue)
               }>
@@ -122,7 +122,7 @@ export default function SettingScreen({naviagtion}) {
           <View style={styles.content}>
             <Text style={styles.titleSecond}>Tự động phát hiện</Text>
             <Switch
-              trackColor={{false: '#767577', true: '#81b0ff'}}
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
               thumbColor={isEnabledAuto ? '#f5dd4b' : '#f4f3f4'}
               ios_backgroundColor="#3e3e3e"
               onValueChange={toggleSwitchAuto}

@@ -30,8 +30,14 @@ function CourseItem(props) {
             courseName: course.courseName,
             imgLogo: course.imgLogo,
             wordLearnedNumber: 0,
+            wordLearningNumber: 0,
             listLearning: [],
             listLearned: [],
+            unitList: course.unitList.map(unit => ({
+              unitId: unit.unitId,
+              wordLearnedNumber: 0,
+              wordLearningNumber: 0,
+            })),
             wordNumber: course.wordNumber,
           });
           console.log(mycoursedata.data().listCourse);
