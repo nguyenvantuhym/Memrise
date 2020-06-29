@@ -56,19 +56,6 @@ const TestScreen = ({ navigation }) => {
       headerTitleStyle: {
         fontWeight: 'bold',
       },
-      headerLeft: () => (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate();
-          }}>
-          <Image style={styles.cancel} source={Cancel} />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <View style={styles.scores}>
-          <Text style={styles.number}>10</Text>
-        </View>
-      ),
     });
   }, [navigation]);
 

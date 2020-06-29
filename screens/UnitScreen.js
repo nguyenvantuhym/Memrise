@@ -12,6 +12,7 @@ function UnitScreen({ route, navigation }) {
   useEffect(() => {
     if (wordList) {
       setWords(wordList);
+      console.log(wordList)
     }
   }, [wordList]);
   return (

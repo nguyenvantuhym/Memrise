@@ -20,6 +20,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import WordDetailScreen from './screens/WordDetailScreen';
 import SettingScreen from './screens/SettingScreen';
 import MyCourseScreen from './screens/MyCourseScreen';
+import ChooseWordTestScreen from './screens/ChooseWordTestScreen';
 
 import {
   COURSE_SCREEN,
@@ -33,6 +34,7 @@ import {
   WORD_DETAIL_SCREEN,
   PROFILE_SCREEN,
   SETTING_SCREEN,
+  CHOOSE_WORD_TEST_SCREEN,
 } from './config/ScreenName';
 import MenuIMG from './asset/menu.png';
 import ProfileIMG from './images/user.png';
@@ -92,7 +94,7 @@ function StackMainScreen() {
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => {
-                // navigation.navigate(COURSE_SCREEN);
+                navigation.navigate(COURSE_SCREEN);
               }}>
               <Image style={styles.cancel} source={Cancel} />
             </TouchableOpacity>
@@ -192,7 +194,7 @@ function StackMainScreen() {
           headerRight: () => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(SETTING_SCREEN);
+                navigation.navigate(CHOOSE_WORD_TEST_SCREEN);
               }}>
               <Image style={styles.settings} source={SettingsIMG} />
             </TouchableOpacity>
@@ -211,6 +213,33 @@ function StackMainScreen() {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
+        })}
+      />
+      <StackMain.Screen
+        name={CHOOSE_WORD_TEST_SCREEN}
+        component={ChooseWordTestScreen}
+        options={({ navigation }) => ({
+          title: ' ',
+          headerStyle: {
+            backgroundColor: '#95d9e6',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate(COURSE_SCREEN);
+              }}>
+              <Image style={styles.cancel} source={Cancel} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <View style={styles.scoresChoose}>
+              <Text style={styles.number}>10</Text>
+            </View>
+          ),
         })}
       />
     </StackMain.Navigator>
@@ -295,6 +324,14 @@ const styles = StyleSheet.create({
     paddingTop: screenWidth(1),
     paddingBottom: screenWidth(1),
     backgroundColor: '#78c5b0',
+    marginRight: 10,
+    borderRadius: screenWidth(4),
+  },
+  scoresChoose: {
+    paddingHorizontal: screenWidth(7),
+    paddingTop: screenWidth(1),
+    paddingBottom: screenWidth(1),
+    backgroundColor: '#ace6f1',
     marginRight: 10,
     borderRadius: screenWidth(4),
   },
