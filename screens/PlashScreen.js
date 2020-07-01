@@ -10,11 +10,11 @@ import {
   COURSE_SCREEN,
   MY_COURSE_SCREEN,
 } from '../config/ScreenName';
-import { Context } from './../context/ContextUser';
+import { ContextUser } from './../context/ContextUser';
 import { screenWidth, screenHeight } from './../helper/SizeScreen';
 
 export default function PlashScreen({ navigation }) {
-  const { setUser } = useContext(Context);
+  const { setUser } = useContext(ContextUser);
 
   function onAuthStateChanged(userRes) {
     if (userRes) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 const ButtomCustome = props => {
   const styles = StyleSheet.create({

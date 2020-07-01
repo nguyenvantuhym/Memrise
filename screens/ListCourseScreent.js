@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { CommonActions } from '@react-navigation/native';
-import { Context } from '../context/ContextUser';
+import { ContextUser } from '../context/ContextUser';
 import { COURSE_SCREEN } from '../config/ScreenName';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import ButtomCustome from '../components/ButtonCutome';
@@ -10,7 +10,7 @@ import CourseItem from '../components/CourseItem';
 import { screenHeight, screenWidth } from './../helper/SizeScreen';
 
 function ListCourseScreen(props) {
-  const { user, listMyCourse } = useContext(Context);
+  const { user, listMyCourse } = useContext(ContextUser);
   const [courses, setCourses] = useState([]);
   const { navigation } = props;
   useEffect(() => {
@@ -57,13 +57,7 @@ function ListCourseScreen(props) {
           contentContainerStyle={{ paddingBottom: 130 }}
           data={courses}
           renderItem={({ item }) => {
-            return (
-              <CourseItem
-                navigation={navigation}
-                course={item}
-                discription=""
-              />
-            );
+            return <CourseItem navigation={navigation} course={item} />;
           }}
           keyExtractor={item => item.id}
         />

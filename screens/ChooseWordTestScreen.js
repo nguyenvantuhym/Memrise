@@ -39,22 +39,24 @@ const TopStyle = StyleSheet.create({
 const Center = props => (
   <View style={CenterStyle.center}>
     <View style={CenterStyle.container}>
-      <View style={CenterStyle.chooseWord}><Text>Chọn từ</Text></View>
+      <View style={CenterStyle.chooseWord}>
+        <Text>Chọn từ</Text>
+      </View>
       <View style={CenterStyle.listWord}>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-          <Word/>
-        <WordSpace/>
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <Word />
+        <WordSpace />
       </View>
     </View>
     <View style={{ height: screenHeight(8) }} />
@@ -70,28 +72,28 @@ const CenterStyle = StyleSheet.create({
   center: {
     flex: 7,
     width: screenWidth(94),
-    marginRight: screenWidth(1)
+    marginRight: screenWidth(1),
   },
   listWord: {
-     width: screenWidth(94),
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      marginLeft: screenWidth(4.7)
+    width: screenWidth(94),
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginLeft: screenWidth(4.7),
   },
   chooseWord: {
-      width: screenWidth(90),
-      height: screenHeight(8),
-      borderBottomColor: '#e1e2e5',
-      borderBottomWidth: 1,
-      marginLeft: screenWidth(2),
-      marginBottom: screenHeight(2)
-  }
+    width: screenWidth(90),
+    height: screenHeight(8),
+    borderBottomColor: '#e1e2e5',
+    borderBottomWidth: 1,
+    marginLeft: screenWidth(2),
+    marginBottom: screenHeight(2),
+  },
 });
 
 const Word = props => (
-  <View style={WordStyle.center}> 
-      <Text style={WordStyle.word}>手</Text>
+  <View style={WordStyle.center}>
+    <Text style={WordStyle.word}>手</Text>
   </View>
 );
 const WordStyle = StyleSheet.create({
@@ -100,22 +102,19 @@ const WordStyle = StyleSheet.create({
     backgroundColor: '#95d9e6',
     borderRadius: 4,
     marginRight: screenWidth(3),
-    marginBottom: screenWidth(3)
-  }
+    marginBottom: screenWidth(3),
+  },
 });
-const WordSpace = props => (
-    <View style={WordSpaceStyle.center}> 
-    </View>
-  );
-  const WordSpaceStyle = StyleSheet.create({
-    center: {
-      width: screenWidth(40),
-      backgroundColor: '#95d9e6',
-      borderRadius: 4,
-      marginRight: screenWidth(3),
-      marginBottom: screenWidth(3),
-    }
-  });
+const WordSpace = props => <View style={WordSpaceStyle.center} />;
+const WordSpaceStyle = StyleSheet.create({
+  center: {
+    width: screenWidth(40),
+    backgroundColor: '#95d9e6',
+    borderRadius: 4,
+    marginRight: screenWidth(3),
+    marginBottom: screenWidth(3),
+  },
+});
 
 const ButtonBottom = ({ navigation }) => (
   <View style={styleButtonBottom.bottom}>

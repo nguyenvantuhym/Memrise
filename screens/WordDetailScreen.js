@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { screenHeight, screenWidth } from './../helper/SizeScreen';
 import firestore from '@react-native-firebase/firestore';
-import WordDetailComponent from './../components/WordDetailComponent';
-import QuizComponent from './../components/QuizComponent';
+import WordDetail from './../components/WordDetail';
 
 export default function WordDetailScreen({ route, navigation }) {
-  const { wordId } = route.params.word;
+  const { wordId } = route.params;
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     title: title,
+  //     headerTitleStyle: {
+  //       fontWeight: 'bold',
+  //     },
+  //   });
+  // }, [navigation, title]);
   const [word, setWord] = useState({});
 
   useEffect(() => {
@@ -27,7 +34,7 @@ export default function WordDetailScreen({ route, navigation }) {
       pagingEnabled
       snapToAlignment={'center'}
       renderItem={({ item }) => (
-        <WordDetailComponent navigation={navigation} word={word} />
+        <WordDetail navigation={navigation} word={word} />
       )}
       keyExtractor={(item, index) => index.toString()}
     />

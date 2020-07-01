@@ -16,7 +16,9 @@ const WordItem = props => {
   const { navigation, word } = props;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate(WORD_DETAIL_SCREEN, { word: word })}
+      onPress={() =>
+        navigation.navigate(WORD_DETAIL_SCREEN, { wordId: word.wordId })
+      }
       style={styleContent.containerContent}>
       <View style={{ flex: 2 }}>
         <Image

@@ -16,9 +16,7 @@ const Answer = ({ text, isAnswer }) => {
     <TouchableOpacity
       onPress={onPressAnswer}
       style={answerStyle.itemAnswerContainer}>
-      <View>
-        <Text>{text}</Text>
-      </View>
+      <Text>{text}</Text>
     </TouchableOpacity>
   );
 };

@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { screenWidth } from '../helper/SizeScreen';
-import { Context } from './../context/ContextUser';
+import { ContextUser } from './../context/ContextUser';
 import { MY_COURSE_SCREEN } from '../config/ScreenName';
 
 function CourseItem(props) {
-  const { user } = useContext(Context);
+  const { user } = useContext(ContextUser);
   const { course } = props;
+  const {description} = course;
   const AddCourse = () => {
     const mycourseRef = firestore()
       .collection('myCourses')
@@ -47,6 +48,12 @@ function CourseItem(props) {
         });
       })
       .then(function() {
+        Alert.alert(
+          'Thông báo',
+          `Bạn thêm thành công khóa học ${course.courseName}`,
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
         props.navigation.navigate(MY_COURSE_SCREEN);
         console.log('Transaction successfully committed!');
       })
@@ -80,7 +87,7 @@ function CourseItem(props) {
           <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
             {course.courseName}
           </Text>
-          <Text style={{ fontSize: 12 }}>tututut</Text>
+          <Text style={{ fontSize: 12 }}>{description}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>

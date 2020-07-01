@@ -11,13 +11,22 @@ import {
 import firestore from '@react-native-firebase/firestore';
 
 import deleteicon from './../asset/delete.png';
-import { Context } from './../context/ContextUser';
+import { ContextUser } from './../context/ContextUser';
 import { screenWidth } from './../helper/SizeScreen';
 import { COURSE_SCREEN } from '../config/ScreenName';
 
 function MyCourseItem(props) {
-  const { user, setMyCourseCurrent } = useContext(Context);
-  const { course } = props;
+  const { user, setMyCourseCurrent, setIndexMyCourseCurrent } = useContext(
+    ContextUser,
+  );
+  const { course, index } = props;
+  const indexLearning = course.unitList.reduce((sum, unit) => {
+    const indexLearning =
+      unit.indexLearning === undefined ? 0 : unit.indexLearning;
+    return indexLearning + sum;
+  }, 0);
+  console.log(course.unitList);
+  const { wordNumber } = course;
   const deleteCourse = () => {
     const mycourseRef = firestore()
       .collection('myCourses')
@@ -37,6 +46,12 @@ function MyCourseItem(props) {
         });
       })
       .then(function() {
+        Alert.alert(
+          'Thông báo',
+          `Bạn xóa thành công khóa học ${course.courseName}`,
+          [{ text: 'OK' }],
+          { cancelable: false },
+        );
         props.afterDelete();
         console.log('Transaction successfully committed!');
       })
@@ -62,11 +77,12 @@ function MyCourseItem(props) {
       { cancelable: false },
     );
   };
-
+  console.log(indexLearning / wordNumber);
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         setMyCourseCurrent(course);
+        setIndexMyCourseCurrent(index);
         props.navigation.navigate(COURSE_SCREEN, { id: course.id });
       }}>
       <View style={styles.courseItem}>
@@ -80,7 +96,10 @@ function MyCourseItem(props) {
                 <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
                   {course.courseName}
                 </Text>
-                <Text style={{ fontSize: 12 }}>tututut</Text>
+                <Text
+                  style={{
+                    fontSize: 12,
+                  }}>{`${indexLearning}/${wordNumber}`}</Text>
               </View>
               <TouchableWithoutFeedback onPress={showAlert}>
                 <View style={styles.iconDelete}>
@@ -92,7 +111,7 @@ function MyCourseItem(props) {
           <ProgressBarAndroid
             styleAttr="Horizontal"
             indeterminate={false}
-            progress={0.5}
+            progress={indexLearning / wordNumber}
           />
         </View>
       </View>

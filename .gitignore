@@ -36,6 +36,10 @@ npm-debug.log
 yarn-error.log
 screens/ScreenTesst.js
 android/java_pid8420.hprof
+android/java_pid10277.hprof
+android/java_pid5486.hprof
+android/app/release/app-release.aab
+android/app/release/app-release.apk
 
 # BUCK
 buck-out/

@@ -11,7 +11,7 @@ import auth from '@react-native-firebase/auth';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 
 // import firestore from '@react-native-firebase/firestore';
-import { Context } from './../context/ContextUser';
+import { ContextUser } from './../context/ContextUser';
 import { GoogleSignin } from '@react-native-community/google-signin';
 
 GoogleSignin.configure({
@@ -20,7 +20,7 @@ GoogleSignin.configure({
 });
 
 export default function LoginScreen(props) {
-  const { user, setUser } = useContext(Context);
+  const { user, setUser } = useContext(ContextUser);
   const { navigation } = props;
   function onAuthStateChanged(user) {
     if (user) {
@@ -109,7 +109,7 @@ export default function LoginScreen(props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffc000',
-    height: screenHeight(100),
+    height: screenHeight(101),
     width: screenWidth(100),
   },
   logoImage: {

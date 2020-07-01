@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import Queue from './../helper/Quere';
-import { Alert } from 'react-native';
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import Queue from '../helper/Queue';
 import firestore from '@react-native-firebase/firestore';
+import { ContextUser } from './../context/ContextUser';
+import { initListQueue, rebootQueue } from './../helper/initListQuere';
 
-const Context = React.createContext();
+const Context = createContext();
+
 let listWords = {};
 let listQueue = [];
 let currentQueue = -1;
@@ -16,13 +18,28 @@ let indexLearning = 0;
 const limitWord = 5;
 
 function Provider(props) {
+  const {
+    myCourseCurrent,
+    setMyCourseCurrent,
+    indexCurrentUnit,
+    listMyCourse,
+    indexMyCourseCurrent,
+    user,
+  } = useContext(ContextUser);
   const [listAnswer, setListAnswer] = useState([]);
   const [stateView, setStateView] = useState(0);
   const [word, setWord] = useState({});
+  const currentUnit = myCourseCurrent.unitList[indexCurrentUnit];
+  indexLearning =
+    currentUnit.indexLearning === undefined ? 0 : currentUnit.indexLearning;
+  listQueue =
+    currentUnit.listQueue === undefined
+      ? initListQueue()
+      : rebootQueue(currentUnit.listQueue);
   useEffect(() => {
     firestore()
       .collection('words')
-      .where('unitId', '==', 'dlmWpLRDe98qvxLrlVMO')
+      .where('unitId', '==', currentUnit.unitId)
       .get()
       .then(res => {
         let i = 0;
@@ -34,28 +51,9 @@ function Provider(props) {
         });
         listWords.length = i;
         console.log('init listQueue');
-        for (let i = 0; i < 7; i++) {
-          // khởi tạo queue learning
-          let queueTmp = new Queue();
-          if (i === 0) {
-            queueTmp.setSize(1);
-          } else if (i === 1) {
-            queueTmp.setSize(2);
-          } else if (i === 2) {
-            queueTmp.setSize(3);
-          } else if (i === 3) {
-            queueTmp.setSize(5);
-          } else {
-            queueTmp.setSize(7);
-          }
-          listQueue.push(queueTmp);
-        }
         nextQuestion();
       });
   }, []);
-
-  // init listQuere
-  // let indexLearned = 0;
 
   const checkLearningFinish = () => {
     let finish = true;
@@ -90,10 +88,8 @@ function Provider(props) {
   const moveWordToNextQueue = () => {
     if (checkLearningFinish() === true) {
       console.log('finish roi banj owi okokokokoko');
-      console.log(listWordReview.length());
     } else {
       currentWord = listQueue[currentQueue].peek();
-      //console.log(currentWord);
       setWord(currentWord);
       setStateView(1);
       GenerateAnswerRamdom();
@@ -102,13 +98,50 @@ function Provider(props) {
 
   const addToListQueue = () => {
     const wordNew = listWords[indexLearning];
-    listQueue[0].enqueue(wordNew);
     console.log(listQueue[0]);
+    listQueue[0].enqueue(wordNew);
     // console.log(listWords[indexLearning]);
+
+    // GenerateAnswerRamdom(listWords[indexLearning].index);
+    setMyCourseCurrent({
+      ...myCourseCurrent,
+      unitList: [
+        ...myCourseCurrent.unitList.slice(0, indexCurrentUnit),
+        {
+          ...currentUnit,
+          listQueue: listQueue,
+          indexLearning: indexLearning + 1,
+        },
+        ...myCourseCurrent.unitList.slice(indexCurrentUnit + 1),
+      ],
+    });
+    firestore()
+      .collection('myCourses')
+      .doc(user.uid)
+      .update({
+        listCourse: [
+          ...listMyCourse.slice(0, indexMyCourseCurrent),
+          {
+            ...myCourseCurrent,
+            unitList: [
+              ...myCourseCurrent.unitList.slice(0, indexCurrentUnit),
+              {
+                ...currentUnit,
+                listQueue: listQueue,
+                indexLearning: indexLearning + 1,
+              },
+              ...myCourseCurrent.unitList.slice(indexCurrentUnit + 1),
+            ],
+          },
+          ...listMyCourse.slice(indexMyCourseCurrent + 1),
+        ],
+      })
+      .then(res => {
+        console.log('update roi nhes');
+      });
     setStateView(0);
     setWord(wordNew);
-    // GenerateAnswerRamdom(listWords[indexLearning].index); a
-    indexLearning++;
+    // indexLearning++;
     countWord++;
   };
 
@@ -116,9 +149,8 @@ function Provider(props) {
     // các từ được chuyển qua các queue dựa trên độ ưu tiên là queue nào đó bị đầy ,
     // queue nào đầy sẽ được chuyển trước để trảnh trường hợp bị full queue
     let queueFullIndex = -1;
-    console.log('print queue');
     for (let i = 0; i < 7; i++) {
-      console.log(listQueue[i]);
+      // console.log(listQueue[i]);
       if (listQueue[i].isFull() === true) {
         queueFullIndex = i;
         break;
@@ -150,8 +182,42 @@ function Provider(props) {
     }
   };
   const afterPressTrueAnswer = () => {
-    // console.log(currentQueue);
+    // console.log(myCourseCurrent);
     listQueue[currentQueue].dequeue();
+    setMyCourseCurrent({
+      ...myCourseCurrent,
+      unitList: [
+        ...myCourseCurrent.unitList.slice(0, indexCurrentUnit),
+        {
+          ...currentUnit,
+          listQueue: listQueue,
+        },
+        ...myCourseCurrent.unitList.slice(indexCurrentUnit + 1),
+      ],
+    });
+    firestore()
+      .collection('myCourses')
+      .doc(user.uid)
+      .update({
+        listCourse: [
+          ...listMyCourse.slice(0, indexMyCourseCurrent),
+          {
+            ...myCourseCurrent,
+            unitList: [
+              ...myCourseCurrent.unitList.slice(0, indexCurrentUnit),
+              {
+                ...currentUnit,
+                listQueue: listQueue,
+              },
+              ...myCourseCurrent.unitList.slice(indexCurrentUnit + 1),
+            ],
+          },
+          ...listMyCourse.slice(indexMyCourseCurrent + 1),
+        ],
+      })
+      .then(res => {
+        console.log('update roi nhes');
+      });
     if (currentQueue === 6) {
       listWordReview.enqueue(currentWord);
     } else {

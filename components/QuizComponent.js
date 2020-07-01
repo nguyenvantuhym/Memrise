@@ -25,8 +25,8 @@ const QuizComponent = props => {
           <Image
             source={icon}
             style={{
-              width: PixelRatio.getPixelSizeForLayoutSize(20),
-              height: PixelRatio.getPixelSizeForLayoutSize(25),
+              width: screenWidth(15),
+              height: screenWidth(20),
             }}
           />
         </View>
@@ -57,12 +57,6 @@ const QuizComponent = props => {
           isAnswer={listAnswer[5].isAnswer}
         />
       </View>
-      <View
-        style={{
-          height: 90,
-          width: '100%',
-        }}
-      />
     </View>
   );
 };
@@ -71,7 +65,7 @@ export default QuizComponent;
 const styles = StyleSheet.create({
   screen: {
     width: screenWidth(100),
-    height: screenHeight(100),
+    height: '100%',
     backgroundColor: '#f2f2f2',
   },
   QuestionContainer: {

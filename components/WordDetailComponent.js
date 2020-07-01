@@ -8,7 +8,7 @@ import { TEST_SCREEN } from './../config/ScreenName';
 import { Context } from './../context/ContextTest';
 
 const ButtonBottom = props => {
-  const { nextQuestion } = useContext(Context);
+  var { nextQuestion } = useContext(Context);
 
   return (
     <View style={styleButtonBottom.bottom}>
@@ -29,7 +29,7 @@ const styleButtonBottom = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     alignItems: 'center',
-    bottom: screenHeight(13),
+    bottom: screenHeight(2),
   },
   buttonBottom: {
     backgroundColor: '#ffc000',
@@ -74,9 +74,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   containerCenter: {
-    height: screenHeight(100),
+    height: '100%',
     width: screenWidth(100),
-    position: 'relative',
     backgroundColor: '#f3f3f3',
   },
   center: {

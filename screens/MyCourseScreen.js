@@ -3,7 +3,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { CommonActions } from '@react-navigation/native';
-import { Context } from '../context/ContextUser';
+import { ContextUser } from '../context/ContextUser';
 import { LIST_COURSE_SCREEN, LOGIN_SCREEN } from '../config/ScreenName';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import ButtomCustome from '../components/ButtonCutome';
@@ -11,7 +11,7 @@ import MyCourseItem from '../components/MyCourseItem';
 import { screenHeight, screenWidth } from './../helper/SizeScreen';
 
 function MyCourseScreen(props) {
-  const { user, listMyCourse, setListMyCourse } = useContext(Context);
+  const { user, listMyCourse, setListMyCourse } = useContext(ContextUser);
   const { navigation } = props;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchDataAndNavigate = () => {
@@ -21,9 +21,10 @@ function MyCourseScreen(props) {
         .collection('myCourses')
         .doc(user.uid);
       myCourseRef.get().then(res => {
-        const lscourse = res.data().listCourse ? res.data().listCourse : [];
-        console.log(lscourse);
+        // console.log(lscourse);
         if (res.exists) {
+          const lscourse =
+            res.data().listCourse !== undefined ? res.data().listCourse : [];
           setListMyCourse(lscourse);
         } else {
           myCourseRef.set({ listCourse: [] }).then(() => {
@@ -53,17 +54,17 @@ function MyCourseScreen(props) {
       unsubscribe();
     };
   }, [fetchDataAndNavigate, navigation, props, setListMyCourse]);
-
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <FlatList
           contentContainerStyle={{ paddingBottom: 130 }}
           data={listMyCourse}
-          renderItem={({ item }) => {
+          renderItem={({ item, index }) => {
             return (
               <MyCourseItem
                 course={item}
+                index={index}
                 navigation={navigation}
                 discription="Asdad"
                 afterDelete={fetchDataAndNavigate}

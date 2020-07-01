@@ -94,13 +94,9 @@ function StackMainScreen() {
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => {
-<<<<<<< HEAD
-                navigation.navigate(COURSE_SCREEN);
-=======
                 //console.log("asdasd");
                 navigation.goBack();
                 // navigation.navigate(COURSE_SCREEN);
->>>>>>> 1fc71fdb13d0b330464eb25310c75a5a49708beb
               }}>
               <Image style={styles.cancel} source={Cancel} />
             </TouchableOpacity>
@@ -161,7 +157,7 @@ function StackMainScreen() {
         name={LIST_COURSE_SCREEN}
         component={SelectCourseScreen}
         options={({ navigation }) => ({
-          title: 'Khóa học',
+          title: 'Chọn khóa học',
           headerStyle: {
             backgroundColor: '#2a3546',
           },

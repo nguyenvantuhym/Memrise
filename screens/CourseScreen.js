@@ -1,23 +1,23 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState, useContext} from 'react';
-import { View, StyleSheet, Text, FlatList} from 'react-native';
+import React, { useEffect, useLayoutEffect, useState, useContext} from 'react';
+import { View, StyleSheet, ActivityIndicator, FlatList} from 'react-native';
 import ButtomCustome from './../components/ButtonCutome';
 import {screenHeight, screenWidth} from './../helper/SizeScreen';
-import { Context } from './../context/ContextUser';
+import { ContextUser } from './../context/ContextUser';
 
 import ProgressSection from './../components/progressSection';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import firestore from '@react-native-firebase/firestore';
 import { TEST_SCREEN } from '../config/ScreenName';
 
-function MyCourseScreen({route, navigation}) {
-  const { myCourseCurrent } = useContext(Context);
+function CourseScreen({route, navigation}) {
+  const { myCourseCurrent } = useContext(ContextUser);
   const [course, setCourse] = useState([]);
   const [title , setTitle] = useState('');
   const { id } = myCourseCurrent;
   const { unitList } = course;
   const myUnitList = myCourseCurrent.unitList;
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       title: title,
       headerTitleStyle: {
@@ -36,19 +36,6 @@ function MyCourseScreen({route, navigation}) {
     } else {
 
     }
-    // if (id !== undefined) {
-    //   firestore().collection('units').where('courseId', '==', id).get()
-    //     .then(res1 => {
-    //       let resListSection = [];
-    //       res1.forEach(doc => {
-    //         // doc.data() is never undefined for query doc snapshots
-    //         resListSection.push({ id: doc.id, ...doc.data() });
-    //       });
-    //       resListSection.sort((a, b) => a.index - b.index);
-    //       setListSection(resListSection);
-    //       // console.log(listSection);
-    //     });
-    // }
   }, [id]);
 
   return (
@@ -56,10 +43,12 @@ function MyCourseScreen({route, navigation}) {
       <View style={styles.listSectionCourse}>
         <FlatList
           contentContainerStyle={{paddingBottom: 130}}
-          ListEmptyComponent={()=> <View><Text>vantu</Text></View>}
+          ListEmptyComponent={() => <View style={[styles.containerIndicator, styles.horizontalIndicator]}>
+             <ActivityIndicator size="large" color="#0000ff" />
+          </View>}
           data={unitList}
           renderItem={({item, index }) => {
-            return <ProgressSection navigation={navigation} unit={item} myUnit={myUnitList[index]}/>;
+            return <ProgressSection navigation={navigation} index={index} unit={item} myUnit={myUnitList[index]}/>;
           }}
           keyExtractor={item => item.unitId}
         />
@@ -79,7 +68,7 @@ function MyCourseScreen({route, navigation}) {
     </View>
   );
 }
-export default MyCourseScreen;
+export default CourseScreen;
 
 const styles = StyleSheet.create({
   listSectionCourse: {
@@ -96,5 +85,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 150,
     width: '100%',
+  },
+  containerIndicator: {
+    width: '100%',
+    height: screenHeight(85),
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  horizontalIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent:'center',
   },
 });

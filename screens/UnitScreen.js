@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import ButtomCustome from './../components/ButtonCutome';
 import HeaderUnit from './../components/HeaderUnit';
@@ -14,13 +14,6 @@ function UnitScreen({ route, navigation }) {
   const [words, setWords] = useState([]);
   const flatListRef = useRef(null);
   useEffect(() => {
-<<<<<<< HEAD
-    if (wordList) {
-      setWords(wordList);
-      console.log(wordList)
-    }
-  }, [wordList]);
-=======
     firestore()
       .collection('units')
       .doc(unitId)
@@ -33,7 +26,6 @@ function UnitScreen({ route, navigation }) {
         // }, 3000);
       });
   }, [flatListRef, unitId]);
->>>>>>> 1fc71fdb13d0b330464eb25310c75a5a49708beb
   return (
     <View style={styles.screen}>
       <View style={styles.listSectionCourse}>
@@ -41,6 +33,12 @@ function UnitScreen({ route, navigation }) {
           //scrollEnabled={false}
           ref={flatListRef}
           contentContainerStyle={{ paddingBottom: 130 }}
+          ListEmptyComponent={() => (
+            <View
+              style={[styles.containerIndicator, styles.horizontalIndicator]}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          )}
           ListHeaderComponent={() => <HeaderUnit headerName={unitName} />}
           data={words}
           renderItem={({ item, index }) => {
@@ -78,5 +76,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 150,
     width: '100%',
+  },
+  containerIndicator: {
+    width: '100%',
+    height: screenHeight(85),
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  horizontalIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent: 'center',
   },
 });
