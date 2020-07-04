@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, createContext, useContext } from 'react';
+import { Alert } from 'react-native';
 import Queue from '../helper/Queue';
 import firestore from '@react-native-firebase/firestore';
 import { ContextUser } from './../context/ContextUser';
@@ -92,6 +93,26 @@ function Provider(props) {
 
   const moveWordToNextQueue = () => {
     if (checkLearningFinish() === true) {
+      Alert.alert(
+        'Thông báo',
+        'bạn đã học hoàn thành 5 từ mới, bạn có muốn học tiếp ?',
+        [
+          {
+            text: 'Có',
+            onPress: () => {
+              countWord = 0;
+              nextQuestion();
+            },
+          },
+          {
+            text: 'không',
+            onPress: () => {
+              props.navigation.goBack();
+            },
+          },
+        ],
+        { cancelable: false },
+      );
       console.log('finish roi banj owi okokokokoko');
     } else {
       currentWord = listQueue[currentQueue].peek();
