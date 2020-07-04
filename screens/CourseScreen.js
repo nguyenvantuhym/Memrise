@@ -55,7 +55,7 @@ function CourseScreen({route, navigation}) {
       </View>
 
       <LinearGradientBottom>
-          <ButtomCustome
+          {/* <ButtomCustome
             height={screenHeight(6)}
             width={screenWidth(70)}
             fontSize={20}
@@ -63,7 +63,7 @@ function CourseScreen({route, navigation}) {
             onPress={() => {
               navigation.navigate(REVIEW_SCREEN);
             }}
-          />
+          /> */}
       </LinearGradientBottom>
     </View>
   );
