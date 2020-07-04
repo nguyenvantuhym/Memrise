@@ -79,9 +79,10 @@ export default class ProfileScreen extends React.Component {
           />
           <Button
             onPress={this.logout}
-            title="Logout"
+            title="Đăng xuất"
             type="clear"
             titleStyle={styles.logout}
+            buttonStyle={styles.buttonLogout}
           />
         </View>
       </View>
@@ -111,4 +112,11 @@ const styles = StyleSheet.create({
     color: '#e22525',
     fontSize: 20,
   },
+  buttonLogout: {
+    marginTop: screen(2),
+    borderWidth: 2,
+    borderColor: "#fff",
+    backgroundColor: "#fff",
+    elevation: 10,
+  }
 });

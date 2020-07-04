@@ -150,11 +150,11 @@ export default function SettingScreen({ naviagtion }) {
             <Text style={styles.titleSecond}>Trợ giúp</Text>
           </View>
         </View>
-        <View style={styles.first}>
+        {/* <View style={styles.first}>
           <View style={styles.content}>
             <Text style={styles.logout}>Đăng xuất</Text>
           </View>
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );
@@ -163,11 +163,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fcfaf2',
     paddingBottom: screenHeight(2),
+    paddingHorizontal: screenWidth(2)
   },
   first: {
     backgroundColor: '#fff',
     paddingTop: screenHeight(2),
-    marginTop: screenHeight(2),
+    marginTop: screenWidth(2),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

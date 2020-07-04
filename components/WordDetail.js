@@ -7,6 +7,7 @@ import { Button } from 'react-native-elements';
 import { TEST_SCREEN } from './../config/ScreenName';
 
 const ButtonBottom = props => {
+  const { navigation } = props
   return (
     <View style={styleButtonBottom.bottom}>
       <Button
@@ -14,7 +15,7 @@ const ButtonBottom = props => {
         type="outline"
         buttonStyle={styleButtonBottom.buttonBottom}
         titleStyle={styleButtonBottom.fontTextButton}
-        onPress={() => {}}
+        onPress={() => navigation.navigate(TEST_SCREEN) }
       />
     </View>
   );

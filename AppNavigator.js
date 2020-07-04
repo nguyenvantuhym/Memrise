@@ -196,7 +196,7 @@ function StackMainScreen() {
           headerRight: () => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(CHOOSE_WORD_TEST_SCREEN);
+                navigation.navigate(SETTING_SCREEN);
               }}>
               <Image style={styles.settings} source={SettingsIMG} />
             </TouchableOpacity>
@@ -302,9 +302,9 @@ export default RootStackScreen;
 
 const styles = StyleSheet.create({
   header: {
-    marginLeft: 25,
-    width: 20,
-    height: 20,
+    marginLeft: screenWidth(4),
+    width: 24,
+    height: 24,
   },
   profile: {
     height: 24,
