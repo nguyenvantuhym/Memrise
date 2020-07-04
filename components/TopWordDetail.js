@@ -3,8 +3,26 @@ import { StyleSheet, View, Image, Text } from 'react-native';
 import speaker from '../images/speaker.png';
 import tree0 from '../images/demo.png';
 
+import progress0 from './../asset/progress0.png';
+import progress1 from './../asset/progress1.png';
+import progress2 from './../asset/progress2.png';
+import progress3 from './../asset/progress3.png';
+import progress4 from './../asset/progress4.png';
+import progress5 from './../asset/progress5.png';
+import progress6 from './../asset/progress6.png';
+const listProgress = [
+  progress0,
+  progress1,
+  progress2,
+  progress3,
+  progress4,
+  progress5,
+  progress6,
+];
+
+
 const Top = props => {
-  const { word } = props;
+  const { word, progress } = props;
   return (
     <View style={TopStyle.top}>
       <View style={TopStyle.topLeft}>
@@ -16,7 +34,7 @@ const Top = props => {
           <Text>Mean</Text>
         </View>
       </View>
-      <Image style={TopStyle.wordImage} source={tree0} />
+      <Image style={TopStyle.wordImage} source={listProgress[progress]} />
     </View>
   );
 };

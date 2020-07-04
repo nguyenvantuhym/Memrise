@@ -25,7 +25,7 @@ function MyCourseItem(props) {
       unit.indexLearning === undefined ? 0 : unit.indexLearning;
     return indexLearning + sum;
   }, 0);
-  console.log(course.unitList);
+  // console.log(course.unitList);
   const { wordNumber } = course;
   const deleteCourse = () => {
     const mycourseRef = firestore()
@@ -77,7 +77,7 @@ function MyCourseItem(props) {
       { cancelable: false },
     );
   };
-  console.log(indexLearning / wordNumber);
+   // console.log(indexLearning / wordNumber);
   return (
     <TouchableWithoutFeedback
       onPress={() => {

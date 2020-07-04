@@ -21,6 +21,7 @@ import WordDetailScreen from './screens/WordDetailScreen';
 import SettingScreen from './screens/SettingScreen';
 import MyCourseScreen from './screens/MyCourseScreen';
 import ChooseWordTestScreen from './screens/ChooseWordTestScreen';
+import ReviewScreen from './screens/ReviewScreen';
 
 import {
   COURSE_SCREEN,
@@ -35,6 +36,7 @@ import {
   PROFILE_SCREEN,
   SETTING_SCREEN,
   CHOOSE_WORD_TEST_SCREEN,
+  REVIEW_SCREEN,
 } from './config/ScreenName';
 import MenuIMG from './asset/menu.png';
 import ProfileIMG from './images/user.png';
@@ -82,6 +84,35 @@ function StackMainScreen() {
       <StackMain.Screen
         name={TEST_SCREEN}
         component={TestScreen}
+        options={({ navigation }) => ({
+          title: ' ',
+          headerStyle: {
+            backgroundColor: '#80d0bb',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => {
+                //console.log("asdasd");
+                navigation.goBack();
+                // navigation.navigate(COURSE_SCREEN);
+              }}>
+              <Image style={styles.cancel} source={Cancel} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <View style={styles.scores}>
+              <Text style={styles.number}>10</Text>
+            </View>
+          ),
+        })}
+      />
+      <StackMain.Screen
+        name={REVIEW_SCREEN}
+        component={ReviewScreen}
         options={({ navigation }) => ({
           title: ' ',
           headerStyle: {

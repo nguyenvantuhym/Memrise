@@ -8,7 +8,7 @@ import { ContextUser } from './../context/ContextUser';
 import ProgressSection from './../components/progressSection';
 import LinearGradientBottom from '../components/LinearGradientBottom';
 import firestore from '@react-native-firebase/firestore';
-import { TEST_SCREEN } from '../config/ScreenName';
+import { REVIEW_SCREEN } from '../config/ScreenName';
 
 function CourseScreen({route, navigation}) {
   const { myCourseCurrent } = useContext(ContextUser);
@@ -30,7 +30,7 @@ function CourseScreen({route, navigation}) {
       firestore().collection('courses').doc(id).get()
         .then(res => {
           setCourse(res.data());
-          console.log(res.data().courseName);
+          // console.log(res.data().courseName);
           setTitle(res.data().courseName);
         });
     } else {
@@ -55,15 +55,15 @@ function CourseScreen({route, navigation}) {
       </View>
 
       <LinearGradientBottom>
-          <ButtomCustome
+          {/* <ButtomCustome
             height={screenHeight(6)}
             width={screenWidth(70)}
             fontSize={20}
             title="Ôn tập thông thường"
             onPress={() => {
-              navigation.navigate(TEST_SCREEN);
+              navigation.navigate(REVIEW_SCREEN);
             }}
-          />
+          /> */}
       </LinearGradientBottom>
     </View>
   );

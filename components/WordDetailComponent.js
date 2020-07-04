@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import { screenHeight, screenWidth } from './../helper/SizeScreen';
 import Top from './TopWordDetail';
 import Center from './CenterWordItem';
@@ -42,10 +42,18 @@ const styleButtonBottom = StyleSheet.create({
 
 const WordDetailComponent = props => {
   const { word } = useContext(Context);
+  // console.log(word);
+  if (word.id == undefined) {
+    return (
+      <View style={[styles.containerIndicator, styles.horizontalIndicator]}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
   return (
     <View style={styles.containerCenter}>
       <View style={styles.container}>
-        <Top word={word} />
+        <Top word={word} progress={0} />
         <View style={styles.center}>
           <FlatList
             horizontal
@@ -82,5 +90,16 @@ const styles = StyleSheet.create({
     flex: 4,
     width: '90%',
     alignItems: 'center',
+  },
+  containerIndicator: {
+    width: screenWidth(100),
+    height: screenHeight(85),
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  horizontalIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent: 'center',
   },
 });

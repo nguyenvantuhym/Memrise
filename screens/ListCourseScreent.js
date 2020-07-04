@@ -32,7 +32,6 @@ function ListCourseScreen(props) {
               return arr;
             }
           }, []);
-          console.log('a');
           if (unMount === false) {
             setCourses(arrco);
           }
