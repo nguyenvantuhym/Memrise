@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useContext, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { CommonActions } from '@react-navigation/native';
 import { ContextUser } from '../context/ContextUser';
@@ -11,6 +11,7 @@ import MyCourseItem from '../components/MyCourseItem';
 import { screenHeight, screenWidth } from './../helper/SizeScreen';
 
 function MyCourseScreen(props) {
+  const [fetchFinish, setFetchFinish] = useState(false);
   const { user, listMyCourse, setListMyCourse } = useContext(ContextUser);
   const { navigation } = props;
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,9 +27,11 @@ function MyCourseScreen(props) {
           const lscourse =
             res.data().listCourse !== undefined ? res.data().listCourse : [];
           setListMyCourse(lscourse);
+          setFetchFinish(true);
         } else {
           myCourseRef.set({ listCourse: [] }).then(() => {
             console.log(' thanhf cong nhes');
+            setFetchFinish(true);
           });
         }
       });
@@ -54,6 +57,14 @@ function MyCourseScreen(props) {
       unsubscribe();
     };
   }, [fetchDataAndNavigate, navigation, props, setListMyCourse]);
+
+  if (fetchFinish === false) {
+    return (
+      <View style={[styles.containerIndicator, styles.horizontalIndicator]}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.content}>
@@ -104,5 +115,16 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  containerIndicator: {
+    width: '100%',
+    height: screenHeight(85),
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  horizontalIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent: 'center',
   },
 });

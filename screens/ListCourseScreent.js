@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { CommonActions } from '@react-navigation/native';
 import { ContextUser } from '../context/ContextUser';
@@ -12,6 +12,8 @@ import { screenHeight, screenWidth } from './../helper/SizeScreen';
 function ListCourseScreen(props) {
   const { user, listMyCourse } = useContext(ContextUser);
   const [courses, setCourses] = useState([]);
+  const [fetchFinish, setFetchFinish] = useState(false);
+
   const { navigation } = props;
   useEffect(() => {
     let unMount = false;
@@ -34,6 +36,7 @@ function ListCourseScreen(props) {
           }, []);
           if (unMount === false) {
             setCourses(arrco);
+            setFetchFinish(true);
           }
         });
     } else {
@@ -49,11 +52,24 @@ function ListCourseScreen(props) {
     };
   }, [listMyCourse, navigation, props, user]);
 
+  if (fetchFinish === false) {
+    return (
+      <View style={[styles.containerIndicator, styles.horizontalIndicator]}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <FlatList
           contentContainerStyle={{ paddingBottom: 130 }}
+          ListEmptyComponent={() => (
+            <View
+              style={[styles.containerIndicator, styles.horizontalIndicator]}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          )}
           data={courses}
           renderItem={({ item }) => {
             return <CourseItem navigation={navigation} course={item} />;
@@ -82,5 +98,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 150,
     width: '100%',
+  },
+  containerIndicator: {
+    width: '100%',
+    height: screenHeight(85),
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  horizontalIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignContent: 'center',
   },
 });
