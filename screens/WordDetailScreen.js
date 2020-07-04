@@ -5,7 +5,7 @@ import firestore from '@react-native-firebase/firestore';
 import WordDetail from './../components/WordDetail';
 
 export default function WordDetailScreen({ route, navigation }) {
-  const { wordId } = route.params;
+  const { wordId, progress } = route.params;
   // useLayoutEffect(() => {
   //   navigation.setOptions({
   //     title: title,
@@ -34,7 +34,7 @@ export default function WordDetailScreen({ route, navigation }) {
       pagingEnabled
       snapToAlignment={'center'}
       renderItem={({ item }) => (
-        <WordDetail navigation={navigation} word={word} />
+        <WordDetail navigation={navigation} word={word} progress={progress} />
       )}
       keyExtractor={(item, index) => index.toString()}
     />

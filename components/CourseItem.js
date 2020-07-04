@@ -41,7 +41,7 @@ function CourseItem(props) {
             })),
             wordNumber: course.wordNumber,
           });
-          console.log(mycoursedata.data().listCourse);
+          // console.log(mycoursedata.data().listCourse);
           transaction.update(mycourseRef, {
             listCourse: mycoursedata.data().listCourse,
           });

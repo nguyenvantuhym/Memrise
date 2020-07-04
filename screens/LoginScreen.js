@@ -82,7 +82,7 @@ export default function LoginScreen(props) {
           style={styles.btnF}
           onPress={() => {
             onFacebookButtonPress().then(user => {
-              console.log(user);
+              // console.log(user);
               //setUser(user.user);
             });
           }}>
@@ -94,7 +94,7 @@ export default function LoginScreen(props) {
           style={styles.btnG}
           onPress={() => {
             onGoogleButtonPress().then(user => {
-              console.log(user);
+              // console.log(user);
               //this.setState({ name: user.user.displayName });
             });
           }}>

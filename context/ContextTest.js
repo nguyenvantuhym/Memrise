@@ -15,6 +15,7 @@ let listWordReview = new Queue();
 listWordReview.setSize(100);
 let countWord = 0;
 let indexLearning = 0;
+let indexLearned = 0;
 const limitWord = 5;
 
 function Provider(props) {
@@ -32,6 +33,8 @@ function Provider(props) {
   const currentUnit = myCourseCurrent.unitList[indexCurrentUnit];
   indexLearning =
     currentUnit.indexLearning === undefined ? 0 : currentUnit.indexLearning;
+  indexLearned =
+    currentUnit.indexLearned === undefined ? 0 : currentUnit.indexLearned;
   listQueue =
     currentUnit.listQueue === undefined
       ? initListQueue()
@@ -72,11 +75,13 @@ function Provider(props) {
     for (let i = 0; i < 6; i++) {
       if (index + ((random + i) % 6) < listWords.length) {
         lsAnswer.push({
+          currentQueue: currentQueue,
           word: listWords[index + ((random + i) % 6)],
           isAnswer: (random + i) % 6 === 0,
         });
       } else {
         lsAnswer.push({
+          currentQueue: currentQueue,
           word: listWords[index - ((random + i) % 6)],
           isAnswer: (random + i) % 6 === 0,
         });
@@ -110,6 +115,7 @@ function Provider(props) {
         {
           ...currentUnit,
           listQueue: listQueue,
+          indexLearned,
           indexLearning: indexLearning + 1,
         },
         ...myCourseCurrent.unitList.slice(indexCurrentUnit + 1),
@@ -127,6 +133,7 @@ function Provider(props) {
               ...myCourseCurrent.unitList.slice(0, indexCurrentUnit),
               {
                 ...currentUnit,
+                indexLearned,
                 listQueue: listQueue,
                 indexLearning: indexLearning + 1,
               },
@@ -184,12 +191,19 @@ function Provider(props) {
   const afterPressTrueAnswer = () => {
     // console.log(myCourseCurrent);
     listQueue[currentQueue].dequeue();
+    if (currentQueue === 6) {
+      listWordReview.enqueue(currentWord);
+      indexLearned++;
+    } else {
+      listQueue[currentQueue + 1].enqueue(currentWord);
+    }
     setMyCourseCurrent({
       ...myCourseCurrent,
       unitList: [
         ...myCourseCurrent.unitList.slice(0, indexCurrentUnit),
         {
           ...currentUnit,
+          indexLearned,
           listQueue: listQueue,
         },
         ...myCourseCurrent.unitList.slice(indexCurrentUnit + 1),
@@ -207,6 +221,7 @@ function Provider(props) {
               ...myCourseCurrent.unitList.slice(0, indexCurrentUnit),
               {
                 ...currentUnit,
+                indexLearned,
                 listQueue: listQueue,
               },
               ...myCourseCurrent.unitList.slice(indexCurrentUnit + 1),
@@ -218,11 +233,7 @@ function Provider(props) {
       .then(res => {
         console.log('update roi nhes');
       });
-    if (currentQueue === 6) {
-      listWordReview.enqueue(currentWord);
-    } else {
-      listQueue[currentQueue + 1].enqueue(currentWord);
-    }
+
     nextQuestion();
   };
 

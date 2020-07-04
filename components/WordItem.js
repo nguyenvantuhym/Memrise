@@ -8,21 +8,41 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { WORD_DETAIL_SCREEN } from './../config/ScreenName';
-import icon from './../asset/demo2.png';
-import flash1 from './../asset/flash.png';
+import progress0 from './../asset/progress0.png';
+import progress1 from './../asset/progress1.png';
+import progress2 from './../asset/progress2.png';
+import progress3 from './../asset/progress3.png';
+import progress4 from './../asset/progress4.png';
+import progress5 from './../asset/progress5.png';
+import progress6 from './../asset/progress6.png';
+import flash1 from './../asset/flash1.png';
+
 import { screenWidth } from './../helper/SizeScreen';
 
+const listProgress = [
+  progress0,
+  progress1,
+  progress2,
+  progress3,
+  progress4,
+  progress5,
+  progress6,
+];
+
 const WordItem = props => {
-  const { navigation, word } = props;
+  const { navigation, word, progress } = props;
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate(WORD_DETAIL_SCREEN, { wordId: word.wordId })
+        navigation.navigate(WORD_DETAIL_SCREEN, {
+          wordId: word.wordId,
+          progress: progress,
+        })
       }
       style={styleContent.containerContent}>
       <View style={{ flex: 2 }}>
         <Image
-          source={icon}
+          source={listProgress[progress]}
           style={{
             width: screenWidth(12),
             height: screenWidth(14),

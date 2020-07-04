@@ -38,11 +38,11 @@ const styleButtonBottom = StyleSheet.create({
 });
 
 const WordDetailComponent = props => {
-  const { word } = props;
+  const { word, progress } = props;
   return (
     <View style={styles.containerCenter}>
       <View style={styles.container}>
-        <Top word={word} />
+        <Top word={word} progress={progress} />
         <View style={styles.center}>
           <FlatList
             horizontal

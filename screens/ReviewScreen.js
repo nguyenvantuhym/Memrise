@@ -1,14 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useContext, useEffect } from 'react';
-
-import Provider from './../context/ContextTest';
+import React, { useEffect } from 'react';
 
 import FlatListQuiz from './../components/FlatListQuiz';
-import { ContextUser } from './../context/ContextUser';
-// import { COURSE_SCREEN } from './../config/ScreenName';
 
 const TestScreen = ({ navigation }) => {
-  const { indexUnit, myCourseCurrent } = useContext(ContextUser);
   React.useLayoutEffect(() => {
     navigation.setOptions({
       title: ' ',
@@ -26,11 +21,7 @@ const TestScreen = ({ navigation }) => {
     // console.log(myCourseCurrent);
   }, []);
 
-  return (
-    <Provider>
-      <FlatListQuiz navigation={navigation} />
-    </Provider>
-  );
+  return <FlatListQuiz navigation={navigation} />;
 };
 
 export default TestScreen;

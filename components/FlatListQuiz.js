@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
-import QuizComponent from './QuizComponent';
 import FilterComponentLearning from './FilterComponentLearning';
 
 const FlatListQuiz = props => {
@@ -9,8 +8,8 @@ const FlatListQuiz = props => {
     <FlatList
       horizontal
       showsHorizontalScrollIndicator={false}
-      // scrollEnabled={false}
-      data={[0, 1, 6]}
+      scrollEnabled={false}
+      data={[0]}
       pagingEnabled
       snapToAlignment={'center'}
       renderItem={({ item }) => (
